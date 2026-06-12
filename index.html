@@ -649,6 +649,18 @@ html.js .reveal.in{opacity:1;transform:none}
 .zc-dim__rec{font-size:12.5px;line-height:1.5;color:var(--color-text-tertiary)}
 .zc-dim__rec b{color:var(--color-text-secondary);font-weight:600}
 
+.zc-piece{border:1px solid var(--color-border-subtle);border-radius:var(--radius-tile);overflow:hidden;margin-top:10px;background:var(--color-surface-overlay)}
+.zc-piece__hd{display:grid;grid-template-columns:58px 1fr auto;gap:14px;align-items:center;padding:11px 14px;cursor:pointer}
+.zc-piece__hd>img{width:58px;height:58px;object-fit:cover;border-radius:9px;border:1px solid var(--color-border-subtle);background:#06060a}
+.zc-piece__meta .t{font-family:var(--font-body);font-weight:600;font-size:14px;color:var(--color-text-primary)}
+.zc-piece__meta .s{font-family:var(--font-mono);font-size:9.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--color-text-tertiary);margin-top:3px}
+.zc-mini{display:flex;gap:5px;margin-top:8px;flex-wrap:wrap}
+.zc-mini i{width:20px;height:5px;border-radius:3px;display:block}
+.zc-piece__sc{font-family:var(--font-display);font-weight:800;font-size:25px;letter-spacing:-.03em;justify-self:end}
+.zc-piece__body{padding:2px 14px 10px;display:none;border-top:1px solid var(--color-border-subtle)}
+.zc-piece.open .zc-piece__body{display:block}
+.zc-piece__body .zc-dim:first-child{border-top:0}
+
 .zc-check{margin-top:26px;border-top:1px solid var(--color-border-default);padding-top:22px}
 .zc-check h5{font-family:var(--font-display);font-weight:700;text-transform:uppercase;font-size:14px;letter-spacing:-.01em;margin:0 0 4px}
 .zc-check .sub{font-size:12px;color:var(--color-text-tertiary);margin:0 0 14px;line-height:1.5}
@@ -1596,7 +1608,7 @@ html.js .reveal.in{opacity:1;transform:none}
       <div>
         <div class="eyebrow">Brand checker</div>
         <h3 id="zcTitle">ZenderHub Checker</h3>
-        <p>Sube una pieza visual y la evaluamos contra los tokens de marca: fondo dark-first, color de marca, disciplina de paleta, grading, formato social y zona de texto. Más un checklist de lo que no se ve en los pixeles.</p>
+        <p>Sube una pieza o un carrusel completo y lo evaluamos contra los tokens de marca: fondo dark-first, color de marca, disciplina de paleta, grading, formato social y zona de texto. En un set también revisamos consistencia y duplicados. Más un checklist de lo que no se ve en los pixeles.</p>
       </div>
       <button class="zc-x" id="zcClose" aria-label="Cerrar checker">
         <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
@@ -1607,31 +1619,54 @@ html.js .reveal.in{opacity:1;transform:none}
       <div id="zcUpload">
         <div class="zc-drop" id="zcDrop" tabindex="0" role="button" aria-label="Subir imagen">
           <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M5 16v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3"/></svg></div>
-          <h4>Arrastra una imagen o haz clic para subir</h4>
-          <p>JPG, PNG o WebP · piezas para feed, story, reel o web</p>
+          <h4>Arrastra una o varias imágenes, o haz clic para subir</h4>
+          <p>JPG, PNG o WebP · una pieza o el carrusel completo (hasta 20)</p>
         </div>
-        <div class="zc-priv">La imagen se analiza en tu navegador · no se sube a ningún servidor</div>
-        <input type="file" id="zcFile" accept="image/*" class="zc-hidden">
+        <div class="zc-priv">Las imágenes se analizan en tu navegador · no se suben a ningún servidor</div>
+        <input type="file" id="zcFile" accept="image/*" multiple class="zc-hidden">
       </div>
 
       <!-- Result -->
       <div class="zc-result zc-hidden" id="zcResult">
-        <div class="zc-preview"><img id="zcImg" alt="Pieza analizada"></div>
-        <div class="zc-top">
-          <div class="zc-ring">
-            <svg width="118" height="118" viewBox="0 0 118 118">
-              <circle cx="59" cy="59" r="52" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="9"/>
-              <circle id="zcRing" cx="59" cy="59" r="52" fill="none" stroke="#5BE3A7" stroke-width="9" stroke-linecap="round" stroke-dasharray="326.7" stroke-dashoffset="326.7"/>
-            </svg>
-            <div class="val"><b id="zcScore">0</b><span>/ 100</span></div>
+        <!-- SINGLE -->
+        <div id="zcSingle">
+          <div class="zc-preview"><img id="zcImg" alt="Pieza analizada"></div>
+          <div class="zc-top">
+            <div class="zc-ring">
+              <svg width="118" height="118" viewBox="0 0 118 118">
+                <circle cx="59" cy="59" r="52" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="9"/>
+                <circle id="zcRing" cx="59" cy="59" r="52" fill="none" stroke="#5BE3A7" stroke-width="9" stroke-linecap="round" stroke-dasharray="326.7" stroke-dashoffset="326.7"/>
+              </svg>
+              <div class="val"><b id="zcScore">0</b><span>/ 100</span></div>
+            </div>
+            <div class="zc-verdict">
+              <h4 id="zcVerdict">Analizando…</h4>
+              <p id="zcVerdictSub"></p>
+            </div>
           </div>
-          <div class="zc-verdict">
-            <h4 id="zcVerdict">Analizando…</h4>
-            <p id="zcVerdictSub"></p>
-          </div>
+          <div id="zcDims"></div>
         </div>
 
-        <div id="zcDims"></div>
+        <!-- MULTI / SET -->
+        <div id="zcMulti" class="zc-hidden">
+          <div class="zc-top">
+            <div class="zc-ring">
+              <svg width="118" height="118" viewBox="0 0 118 118">
+                <circle cx="59" cy="59" r="52" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="9"/>
+                <circle id="zcSetRing" cx="59" cy="59" r="52" fill="none" stroke="#5BE3A7" stroke-width="9" stroke-linecap="round" stroke-dasharray="326.7" stroke-dashoffset="326.7"/>
+              </svg>
+              <div class="val"><b id="zcSetScore">0</b><span>/ 100</span></div>
+            </div>
+            <div class="zc-verdict">
+              <h4 id="zcSetVerdict">Analizando set…</h4>
+              <p id="zcSetVerdictSub"></p>
+            </div>
+          </div>
+          <div class="comp__label" style="margin:6px 0 2px">Consistencia del set</div>
+          <div id="zcConsist"></div>
+          <div class="comp__label" style="margin:22px 0 2px">Piezas · clic para ver el detalle</div>
+          <div id="zcPieces"></div>
+        </div>
 
         <div class="zc-check">
           <h5>Checklist manual</h5>
@@ -1725,7 +1760,9 @@ html.js .reveal.in{opacity:1;transform:none}
       drop=$('zcDrop'), file=$('zcFile'), uploadV=$('zcUpload'), resultV=$('zcResult'),
       imgEl=$('zcImg'), ring=$('zcRing'), scoreEl=$('zcScore'), verdictEl=$('zcVerdict'),
       verdictSub=$('zcVerdictSub'), dimsEl=$('zcDims'), checklistEl=$('zcChecklist'),
-      tallyEl=$('zcTally'), againB=$('zcAgain'), doneB=$('zcDone');
+      tallyEl=$('zcTally'), againB=$('zcAgain'), doneB=$('zcDone'),
+      singleV=$('zcSingle'), multiV=$('zcMulti'), setRing=$('zcSetRing'), setScoreEl=$('zcSetScore'),
+      setVerdictEl=$('zcSetVerdict'), setVerdictSub=$('zcSetVerdictSub'), consistEl=$('zcConsist'), piecesEl=$('zcPieces');
   if(!fab) return;
   var C=2*Math.PI*52; // 326.73
 
@@ -1814,8 +1851,16 @@ html.js .reveal.in{opacity:1;transform:none}
       {nm:'Zona de texto', s:sText, rec:rText, w:1.0}
     ];
     var tw=0,acc=0; dims.forEach(function(x){tw+=x.w;acc+=x.s*x.w;});
-    return {overall:Math.round(acc/tw), dims:dims};
+
+    // firma de color 8x8 (RGB por celda) para detectar duplicados en un set
+    var hc=document.createElement('canvas');hc.width=8;hc.height=8;
+    var hx=hc.getContext('2d');hx.drawImage(img,0,0,8,8);
+    var hd=hx.getImageData(0,0,8,8).data, sig=[];
+    for(var k=0;k<64;k++){ sig.push(hd[k*4]/255,hd[k*4+1]/255,hd[k*4+2]/255); }
+
+    return {overall:Math.round(acc/tw), dims:dims, ar:ar, fmt:fLabel, darkR:darkR, brandR:brandR, sig:sig};
   }
+  function sigDist(a,b){ var s=0; for(var i=0;i<a.length;i++) s+=Math.abs(a[i]-b[i]); return s/a.length; }
 
   function verdict(o){
     if(o>=85) return ['On-brand','#5BE3A7','Esta pieza respira ZenderHub. Lista tras confirmar el checklist.'];
@@ -1824,48 +1869,112 @@ html.js .reveal.in{opacity:1;transform:none}
     return ['Off-brand','#ff6b6b','No sigue el sistema. Revisa color, luz y formato desde la base.'];
   }
 
-  function render(res){
-    var v=verdict(res.overall);
-    ring.setAttribute('stroke',v[1]);
-    ring.style.strokeDashoffset=C; // reset for animation
-    verdictEl.textContent=v[0]; verdictEl.style.color=v[1]; verdictSub.textContent=v[2];
-    dimsEl.innerHTML=res.dims.map(function(d){
-      var st=d.s>=80?'ok':(d.s>=55?'warn':'bad');
-      var col=st==='ok'?'#5BE3A7':(st==='warn'?'#F0A52E':'#ff6b6b');
-      var chip=st==='ok'?'bien':(st==='warn'?'revisar':'corrige');
+  function stOf(s){ return s>=80?'ok':(s>=55?'warn':'bad'); }
+  function colOf(s){ return s>=80?'#5BE3A7':(s>=55?'#F0A52E':'#ff6b6b'); }
+  function chipOf(s){ return s>=80?'bien':(s>=55?'revisar':'corrige'); }
+
+  function dimHTML(dims){
+    return dims.map(function(d){
+      var st=stOf(d.s);
       var nm=d.nm+(d.extra?' · <span style="color:var(--color-text-tertiary);font-weight:500">'+d.extra+'</span>':'');
-      return '<div class="zc-dim"><div class="zc-dim__row"><span class="nm">'+nm+'</span><span class="zc-chip '+st+'">'+chip+'</span></div>'+
-        '<div class="zc-bar"><i data-w="'+d.s+'" style="width:0;background:'+col+'"></i></div>'+
+      return '<div class="zc-dim"><div class="zc-dim__row"><span class="nm">'+nm+'</span><span class="zc-chip '+st+'">'+chipOf(d.s)+'</span></div>'+
+        '<div class="zc-bar"><i data-w="'+d.s+'" style="width:0;background:'+colOf(d.s)+'"></i></div>'+
         '<div class="zc-dim__rec">'+d.rec+'</div></div>';
     }).join('');
-    uploadV.classList.add('zc-hidden'); resultV.classList.remove('zc-hidden');
-    // estado final SIEMPRE escrito (correcto aunque rAF esté pausado); transición como mejora
-    scoreEl.textContent=res.overall;
-    void ring.getBoundingClientRect(); // reflow → dispara la transición sin depender de rAF
-    ring.style.strokeDashoffset=C*(1-res.overall/100);
-    var bars=dimsEl.querySelectorAll('.zc-bar i');
-    void dimsEl.getBoundingClientRect();
-    bars.forEach(function(i){ i.style.width=i.getAttribute('data-w')+'%'; });
-    animateNumber(res.overall);
   }
+  function miniHTML(dims){ return dims.map(function(d){ return '<i style="background:'+colOf(d.s)+'" title="'+d.nm+'"></i>'; }).join(''); }
+  function paintBars(container){ var bars=container.querySelectorAll('.zc-bar i'); void container.getBoundingClientRect(); bars.forEach(function(i){ i.style.width=i.getAttribute('data-w')+'%'; }); }
+  function paintRing(ringEl,score,col){ ringEl.setAttribute('stroke',col); ringEl.style.strokeDashoffset=C; void ringEl.getBoundingClientRect(); ringEl.style.strokeDashoffset=C*(1-score/100); }
 
-  function animateNumber(target){
-    scoreEl.textContent=target;
+  function animateNumber(el,target){
+    el.textContent=target;
     var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
     if(reduce||!window.requestAnimationFrame) return;
-    var start=null, dur=700;
-    function step(t){ if(start===null)start=t; var p=clamp((t-start)/dur,0,1); scoreEl.textContent=Math.round(target*(1-Math.pow(1-p,3))); if(p<1) requestAnimationFrame(step); else scoreEl.textContent=target; }
+    var start=(window.performance&&performance.now)?performance.now():null, dur=700;
+    function step(t){ if(start===null)start=t; var p=clamp((t-start)/dur,0,1); el.textContent=Math.round(target*(1-Math.pow(1-p,3))); if(p<1) requestAnimationFrame(step); else el.textContent=target; }
     requestAnimationFrame(step);
-    setTimeout(function(){ scoreEl.textContent=target; }, dur+120); // red de seguridad si rAF se pausa
+    setTimeout(function(){ el.textContent=target; }, dur+120); // red de seguridad si rAF se pausa o se reanuda tarde
   }
 
-  function handleFile(f){
-    if(!f||!/^image\//.test(f.type)) return;
-    var url=URL.createObjectURL(f);
-    var img=new Image();
-    img.onload=function(){ imgEl.src=url; render(analyze(img)); };
-    img.onerror=function(){ URL.revokeObjectURL(url); };
-    img.src=url;
+  function renderSingle(res,url){
+    multiV.classList.add('zc-hidden'); singleV.classList.remove('zc-hidden');
+    imgEl.src=url;
+    var v=verdict(res.overall);
+    verdictEl.textContent=v[0]; verdictEl.style.color=v[1]; verdictSub.textContent=v[2];
+    dimsEl.innerHTML=dimHTML(res.dims);
+    uploadV.classList.add('zc-hidden'); resultV.classList.remove('zc-hidden');
+    paintRing(ring,res.overall,v[1]);
+    paintBars(dimsEl);
+    animateNumber(scoreEl,res.overall);
+  }
+
+  function std(arr){ var m=arr.reduce(function(a,b){return a+b;},0)/arr.length; return Math.sqrt(arr.reduce(function(a,b){return a+(b-m)*(b-m);},0)/arr.length); }
+
+  function consistency(reslist){
+    var n=reslist.length;
+    // formato uniforme
+    var groups={}; reslist.forEach(function(r){ var key=r.ar.toFixed(2); groups[key]=(groups[key]||0)+1; });
+    var ng=Object.keys(groups).length;
+    var fScore=ng===1?100:Math.round(clamp(100-(ng-1)*35,20,100));
+    var fRec=ng===1?'Todas las piezas comparten el mismo formato ('+reslist[0].fmt+').'
+      :'Hay '+ng+' formatos distintos en el set. Un carrusel debe ser uniforme: todas 4:5, todas 1:1 o todas 9:16.';
+    // cohesión visual (varianza de luz y color de marca)
+    var cScore=Math.round(clamp(100-(std(reslist.map(function(r){return r.darkR;}))*180 + std(reslist.map(function(r){return r.brandR;}))*230),20,100));
+    var cRec=cScore>=75?'Set visualmente cohesivo: luz y color de marca consistentes entre piezas.'
+      :'Las piezas varían mucho entre sí (luz o color). Unifica el grading y el uso del acento para que se lean como un mismo set.';
+    // duplicados
+    var dup=[]; for(var i=0;i<n;i++) for(var j=i+1;j<n;j++){ if(sigDist(reslist[i].sig,reslist[j].sig)<0.012) dup.push((i+1)+'≈'+(j+1)); }
+    var dScore=dup.length===0?100:Math.round(clamp(100-dup.length*45,0,100));
+    var dRec=dup.length===0?'No se detectan piezas duplicadas; cada una es distinta.'
+      :'Piezas casi idénticas: '+dup.join(', ')+'. Cada pieza del carrusel debe aportar algo nuevo.';
+    var dims=[
+      {nm:'Formato uniforme', s:fScore, rec:fRec, w:1},
+      {nm:'Cohesión visual', s:cScore, rec:cRec, w:1},
+      {nm:'Sin duplicados', s:dScore, rec:dRec, w:1}
+    ];
+    return {dims:dims, score:Math.round((fScore+cScore+dScore)/3)};
+  }
+
+  function renderSet(items){
+    singleV.classList.add('zc-hidden'); multiV.classList.remove('zc-hidden');
+    var reslist=items.map(function(x){return x.res;});
+    var avg=Math.round(reslist.reduce(function(a,r){return a+r.overall;},0)/reslist.length);
+    var cons=consistency(reslist);
+    var setScore=Math.round(0.78*avg+0.22*cons.score);
+    var v=verdict(setScore);
+    setVerdictEl.textContent=v[0]; setVerdictEl.style.color=v[1];
+    setVerdictSub.textContent=reslist.length+' piezas · promedio '+avg+'/100 · consistencia '+cons.score+'/100';
+    consistEl.innerHTML=dimHTML(cons.dims);
+    piecesEl.innerHTML=items.map(function(x,idx){
+      var r=x.res, pv=verdict(r.overall);
+      return '<div class="zc-piece"><div class="zc-piece__hd"><img src="'+x.url+'" alt="Pieza '+(idx+1)+'">'+
+        '<div class="zc-piece__meta"><div class="t">Pieza '+(idx+1)+'</div><div class="s">'+pv[0]+' · '+r.fmt+'</div><div class="zc-mini">'+miniHTML(r.dims)+'</div></div>'+
+        '<div class="zc-piece__sc" style="color:'+pv[1]+'">'+r.overall+'</div></div>'+
+        '<div class="zc-piece__body">'+dimHTML(r.dims)+'</div></div>';
+    }).join('');
+    piecesEl.querySelectorAll('.zc-piece__hd').forEach(function(hd){ hd.addEventListener('click',function(){ var p=hd.parentElement; p.classList.toggle('open'); if(p.classList.contains('open')) paintBars(p); }); });
+    uploadV.classList.add('zc-hidden'); resultV.classList.remove('zc-hidden');
+    paintRing(setRing,setScore,v[1]);
+    paintBars(consistEl);
+    animateNumber(setScoreEl,setScore);
+  }
+
+  function loadAndAnalyze(f){
+    return new Promise(function(res){
+      if(!f||!/^image\//.test(f.type)){ res(null); return; }
+      var url=URL.createObjectURL(f);
+      var img=new Image();
+      img.onload=function(){ res({res:analyze(img),url:url}); };
+      img.onerror=function(){ res(null); };
+      img.src=url;
+    });
+  }
+
+  function handleFiles(list){
+    var files=[].slice.call(list).filter(function(f){return /^image\//.test(f.type);});
+    if(!files.length) return;
+    if(files.length===1){ loadAndAnalyze(files[0]).then(function(x){ if(x) renderSingle(x.res,x.url); }); return; }
+    Promise.all(files.slice(0,20).map(loadAndAnalyze)).then(function(items){ items=items.filter(Boolean); if(items.length===1) renderSingle(items[0].res,items[0].url); else if(items.length) renderSet(items); });
   }
 
   function buildChecklist(){
@@ -1899,10 +2008,10 @@ html.js .reveal.in{opacity:1;transform:none}
 
   drop.addEventListener('click',function(){ file.click(); });
   drop.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); file.click(); } });
-  file.addEventListener('change',function(){ if(file.files&&file.files[0]) handleFile(file.files[0]); });
+  file.addEventListener('change',function(){ if(file.files&&file.files.length) handleFiles(file.files); });
   ['dragenter','dragover'].forEach(function(ev){ drop.addEventListener(ev,function(e){ e.preventDefault(); drop.classList.add('drag'); }); });
   ['dragleave','dragend'].forEach(function(ev){ drop.addEventListener(ev,function(){ drop.classList.remove('drag'); }); });
-  drop.addEventListener('drop',function(e){ e.preventDefault(); drop.classList.remove('drag'); if(e.dataTransfer.files&&e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]); });
+  drop.addEventListener('drop',function(e){ e.preventDefault(); drop.classList.remove('drag'); if(e.dataTransfer.files&&e.dataTransfer.files.length) handleFiles(e.dataTransfer.files); });
 
   buildChecklist();
 })();
