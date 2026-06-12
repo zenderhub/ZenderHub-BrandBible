@@ -368,6 +368,55 @@ section.sec{padding:clamp(72px,9vw,120px) 0;position:relative}
 .chan h4{font-family:var(--font-body);font-weight:600;font-size:14px;margin:0 0 4px}
 .chan p{margin:0;font-size:12px;color:var(--color-text-tertiary);line-height:1.45}
 
+/* ---- Piezas para redes sociales (10·E) ---- */
+.sp-set{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+@media(max-width:520px){.sp-set{grid-template-columns:1fr;max-width:280px;margin-inline:auto}}
+.sp{position:relative;aspect-ratio:4/5;border-radius:var(--radius-card);overflow:hidden;border:1px solid var(--color-border-subtle);background:#06060a}
+.sp img.photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;filter:brightness(.8) saturate(.74) contrast(1.04)}
+.sp .fade{position:absolute;inset:0;z-index:1;pointer-events:none;background:
+  radial-gradient(130% 88% at 88% -10%,rgba(163,8,106,.22),transparent 70%),
+  linear-gradient(to top,#06060a 14%,rgba(6,6,10,.95) 30%,rgba(6,6,10,.6) 47%,rgba(6,6,10,.18) 67%,transparent 88%)}
+.sp .grain{position:absolute;inset:0;opacity:.07;mix-blend-mode:screen;z-index:2;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.sp .pad{position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;padding:var(--sp-m,18px)}
+.sp .top{font-family:var(--font-mono);font-size:9px;text-transform:uppercase;letter-spacing:.12em;color:var(--color-brand-accent-soft)}
+.sp .body{margin-top:auto}
+.sp .kicker{font-family:var(--font-mono);font-size:9px;text-transform:uppercase;letter-spacing:.12em;color:var(--color-brand-accent-soft);margin-bottom:8px}
+.sp .ttl{font-family:var(--font-display);font-weight:800;text-transform:uppercase;font-size:clamp(16px,4.2vw,24px);line-height:.96;letter-spacing:-.02em;color:#fff;margin:0}
+.sp .ttl em{font-style:normal;color:var(--color-brand-accent)}
+.sp .sup{font-family:var(--font-body);font-size:11.5px;line-height:1.42;color:var(--color-text-secondary);margin:9px 0 0;max-width:92%}
+.sp .foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:16px;padding-top:13px;border-top:1px solid rgba(255,255,255,.12)}
+.sp .foot img{height:12px;width:auto}
+.sp .cta{font-family:var(--font-display);font-weight:700;text-transform:uppercase;font-size:9.5px;letter-spacing:.01em;color:#fff;background:var(--color-brand-primary);border-radius:999px;padding:6px 11px;white-space:nowrap}
+.sp .cap{position:absolute;left:14px;right:14px;bottom:12px;z-index:7}
+
+/* anatomía con guías */
+.sp-anatomy{display:grid;grid-template-columns:268px 1fr;gap:32px;align-items:center}
+@media(max-width:680px){.sp-anatomy{grid-template-columns:1fr;gap:24px;justify-items:center}}
+.sp--diagram{width:268px;max-width:100%}
+.sp--diagram .pad{padding-bottom:90px}
+.sp--diagram .mgn{position:absolute;inset:18px;z-index:5;border:1px dashed rgba(43,184,224,.55);border-radius:12px;pointer-events:none}
+.sp--diagram .foot-abs{position:absolute;left:18px;right:18px;bottom:18px;z-index:6;display:flex;align-items:center;justify-content:space-between;gap:10px;padding-top:13px;border-top:1px solid rgba(255,255,255,.14)}
+.sp--diagram .foot-abs img{height:12px}
+.sp--diagram .gap-band{position:absolute;left:18px;right:18px;bottom:66px;height:24px;z-index:6;display:grid;place-items:center;
+  background:repeating-linear-gradient(45deg,rgba(200,34,138,.22),rgba(200,34,138,.22) 5px,transparent 5px,transparent 11px);
+  border-top:1px dashed rgba(212,79,160,.85);border-bottom:1px dashed rgba(212,79,160,.85)}
+.sp--diagram .gap-band span{font-family:var(--font-mono);font-size:8px;text-transform:uppercase;letter-spacing:.12em;color:var(--color-brand-primary-accessible);background:rgba(6,6,10,.75);padding:2px 6px;border-radius:4px}
+.sp-zones{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:16px}
+.sp-zones li{display:grid;grid-template-columns:26px 1fr;gap:12px;align-items:start}
+.sp-zones .z{font-family:var(--font-mono);font-size:10px;font-weight:700;color:var(--color-brand-primary-soft);padding-top:1px}
+.sp-zones h5{font-family:var(--font-body);font-weight:600;font-size:14px;margin:0 0 3px;color:var(--color-text-primary)}
+.sp-zones p{margin:0;font-size:13px;line-height:1.5;color:var(--color-text-secondary)}
+.sp-zones code{font-family:var(--font-mono);font-size:11.5px;color:var(--color-brand-accent)}
+
+/* checklist de verificación */
+.precheck{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:12px 26px}
+@media(max-width:620px){.precheck{grid-template-columns:1fr}}
+.precheck li{display:grid;grid-template-columns:22px 1fr;gap:11px;align-items:start;font-size:13.5px;line-height:1.5;color:var(--color-text-secondary)}
+.precheck .bx{width:20px;height:20px;border-radius:6px;background:rgba(91,227,167,.12);color:var(--color-status-success);display:grid;place-items:center;margin-top:1px}
+.precheck .bx svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.precheck b{color:var(--color-text-primary);font-weight:600}
+
 /* ---- TYPOGRAPHY ---- */
 .face{display:grid;grid-template-columns:200px 1fr;gap:28px;align-items:center}
 @media (max-width:720px){.face{grid-template-columns:1fr;gap:14px}}
@@ -559,7 +608,7 @@ html.js .reveal.in{opacity:1;transform:none}
     <a class="snav" href="#movimiento"><span class="row"><span class="n">07</span><span class="t">Movimiento</span></span><span class="d">4 duraciones + easing</span></a>
     <a class="snav" href="#componentes"><span class="row"><span class="n">08</span><span class="t">Componentes</span></span><span class="d">27 componentes en vivo</span></a>
     <a class="snav" href="#voz"><span class="row"><span class="n">09</span><span class="t">Voz &amp; tono</span></span><span class="d">Bilingüe + léxico SÍ/NO</span></a>
-    <a class="snav" href="#imagen"><span class="row"><span class="n">10</span><span class="t">Imagen &amp; video</span></span><span class="d">Foto, datos, motion, canal</span></a>
+    <a class="snav" href="#imagen"><span class="row"><span class="n">10</span><span class="t">Imagen &amp; video</span></span><span class="d">Foto, datos, motion, redes, canal</span></a>
     <a class="snav" href="#accesibilidad"><span class="row"><span class="n">11</span><span class="t">Accesibilidad</span></span><span class="d">Contraste, foco, motion, ARIA</span></a>
     <a class="snav" href="#tokens"><span class="row"><span class="n">12</span><span class="t">Tokens</span></span><span class="d">Gobernanza + roadmap</span></a>
   </nav>
@@ -1202,8 +1251,119 @@ html.js .reveal.in{opacity:1;transform:none}
           <h4>Impreso</h4><p>Se mantiene el fondo negro. No hay versión "light" de identidad; svc-light es una excepción puntual.</p></div>
       </div>
 
+      <!-- ============ PIEZAS PARA REDES SOCIALES ============ -->
+      <div class="sub-h reveal"><span class="mono">E</span>Piezas para redes sociales</div>
+      <p class="sub-lede reveal">Una pieza social no es una foto con texto encima: es una composición con anatomía fija. Misma estructura en todo el set, aire que se reserva antes de llenarlo, y un cierre — logo y CTA — que nunca queda apretado. Todo lo de arriba (grading, dos voces, datos) sigue aplicando; aquí mandan el ritmo vertical y la consistencia.</p>
+
+      <!-- Anatomía de la pieza -->
+      <div class="comp__label reveal">Anatomía de una pieza · 4:5 / 9:16</div>
+      <div class="sp-anatomy reveal" style="margin:14px 0 40px">
+        <div class="sp sp--diagram">
+          <img class="photo" src="photos/conveyor.jpg" alt="">
+          <div class="fade"></div><div class="grain"></div>
+          <div class="mgn"></div>
+          <div class="pad">
+            <div class="top">01 / 04 · ZENDERHUB</div>
+            <div class="body">
+              <div class="kicker">Fulfillment que se paga solo</div>
+              <h4 class="ttl">99.2% <em>on-time</em><br>en 24.000 pedidos</h4>
+              <p class="sup">RFID en cada unidad. Multicarrier al mejor costo y tiempo.</p>
+            </div>
+          </div>
+          <div class="gap-band"><span>aire reservado · fijo</span></div>
+          <div class="foot-abs"><img src="logos/zenderhub-logo-negative-horizontal.svg" alt="ZenderHub"><span class="cta">Cotiza gratis</span></div>
+        </div>
+        <ul class="sp-zones">
+          <li><span class="z">A</span><div><h5>Barra superior</h5><p>Anclada al margen superior. Índice del carrusel o kicker. Misma posición en todas las piezas del set.</p></div></li>
+          <li><span class="z">B</span><div><h5>Contenido · jerarquía única</h5><p>Un mensaje dominante (titular Exo) + un apoyo (cuerpo Jakarta) + metadatos. Crece hacia arriba, nunca invade el aire de abajo.</p></div></li>
+          <li><span class="z">C</span><div><h5>Aire reservado</h5><p>Separación <b>fija</b> entre contenido y footer. No depende del centrado: si el texto crece, se recorta el texto — no este espacio. Múltiplo de 8 (<code>24–32px</code>).</p></div></li>
+          <li><span class="z">D</span><div><h5>Cierre · logo + CTA</h5><p>Logo SVG real y CTA, anclados al margen inferior con respiración. Logo y CTA nunca van pegados entre sí.</p></div></li>
+        </ul>
+      </div>
+
+      <!-- Ritmo vertical: error vs correcto -->
+      <div class="comp__label reveal">Ritmo vertical · el error #1</div>
+      <div class="fgrid fg-2 reveal" style="margin:12px 0 16px">
+        <div class="sp">
+          <img class="photo" src="photos/wh-boxes.jpg" alt=""><div class="fade"></div><div class="grain"></div>
+          <span class="tag tag--no" style="position:absolute;top:12px;left:12px;z-index:7">No</span>
+          <div class="pad" style="justify-content:center;text-align:center">
+            <div class="body" style="margin:0">
+              <h4 class="ttl">Reducimos tu costo logístico hasta 18% sin que cambies de operador ni de sistema</h4>
+              <p class="sup" style="max-width:100%">Demasiado texto centrado empuja todo contra los bordes y el footer queda pegado.</p>
+              <div class="foot" style="border-top:0;margin-top:10px"><img src="logos/zenderhub-logo-negative-horizontal.svg" alt=""><span class="cta">Cotiza gratis</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="sp">
+          <img class="photo" src="photos/wh-boxes.jpg" alt=""><div class="fade"></div><div class="grain"></div>
+          <span class="tag tag--do" style="position:absolute;top:12px;left:12px;z-index:7">Sí</span>
+          <div class="pad">
+            <div class="top">ZENDERHUB</div>
+            <div class="body">
+              <div class="kicker">Mismo operador, mismo sistema</div>
+              <h4 class="ttl">−18% en <em>costo logístico</em></h4>
+              <p class="sup">Menos líneas, dato resaltado. El aire al footer queda intacto.</p>
+              <div class="foot"><img src="logos/zenderhub-logo-negative-horizontal.svg" alt=""><span class="cta">Cotiza gratis</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="callout reveal" style="margin-bottom:38px"><b>Nunca centres el contenido para "rellenar".</b> El centrado automático empuja todo contra los bordes cuando el texto crece y el aire desaparece. Ancla arriba y abajo, reserva el espacio del cierre, y si una pieza se desborda recorta el contenido — menos líneas, chips en una fila, un punto menos de tipografía — antes que sacrificar el aire.</div>
+
+      <!-- Consistencia del set -->
+      <div class="comp__label reveal">Consistencia del set · mismos márgenes, mismo cierre</div>
+      <p class="sub-lede reveal">Todas las piezas de un carrusel comparten márgenes (laterales, superior, inferior). El footer se ancla a la misma distancia del borde inferior en todas; la barra superior, a la misma del borde superior. Si un elemento cambia de posición entre piezas, es una decisión — no un accidente.</p>
+      <div class="sp-set reveal" style="margin:12px 0 14px">
+        <div class="sp">
+          <img class="photo" src="photos/scan.jpg" alt=""><div class="fade"></div><div class="grain"></div>
+          <div class="pad"><div class="top">01 / 03</div><div class="body"><div class="kicker">Recibimos</div><h4 class="ttl">RFID en <em>cada unidad</em></h4><div class="foot"><img src="logos/zenderhub-logo-negative-horizontal.svg" alt=""><span class="cta">Saber más</span></div></div></div>
+        </div>
+        <div class="sp">
+          <img class="photo" src="photos/wh-shelves.jpg" alt=""><div class="fade"></div><div class="grain"></div>
+          <div class="pad"><div class="top">02 / 03</div><div class="body"><div class="kicker">Almacenamos</div><h4 class="ttl">Inventario <em>sin costo ocioso</em></h4><div class="foot"><img src="logos/zenderhub-logo-negative-horizontal.svg" alt=""><span class="cta">Saber más</span></div></div></div>
+        </div>
+        <div class="sp">
+          <img class="photo" src="photos/conveyor.jpg" alt=""><div class="fade"></div><div class="grain"></div>
+          <div class="pad"><div class="top">03 / 03</div><div class="body"><div class="kicker">Despachamos</div><h4 class="ttl">Multicarrier al <em>mejor costo</em></h4><div class="foot"><img src="logos/zenderhub-logo-negative-horizontal.svg" alt=""><span class="cta">Cotiza gratis</span></div></div></div>
+        </div>
+      </div>
+      <p class="sub-lede reveal" style="font-size:13px;color:var(--color-text-tertiary);margin-bottom:38px">Misma barra superior, mismo titular de dos voces, mismo footer anclado. Solo cambia el contenido y la foto.</p>
+
+      <!-- Reglas heredadas, aplicadas a social -->
+      <div class="comp__label reveal">Lo que ya está documentado · aplicado aquí</div>
+      <div class="chan reveal" style="margin:12px 0 38px">
+        <div class="card">
+          <h4>Foto sobre fondo de marca</h4>
+          <p>La foto puede llenar el lienzo, pero se desvanece antes del texto: fade largo y fluido con varias paradas de opacidad, nunca corte seco ni a negro plano. Donde cae el texto el fondo ya está oscuro y limpio. Fotos claras → oscurece antes. Encuadra el sujeto fuera del degradado. Receta en <b>10·A · Grading</b>.</p></div>
+        <div class="card">
+          <h4>Dos voces</h4>
+          <p>Titular en display (Exo, mayúsculas) + apoyo en cuerpo (Jakarta, sentence case). Una sola idea por titular, no varias compitiendo. No mezcles los roles. Detalle en <b>09 · Voz &amp; tono</b>.</p></div>
+        <div class="card">
+          <h4>Cifras y credibilidad</h4>
+          <p>Cada afirmación de valor lleva una cifra detrás: sin números no hay credibilidad. Resalta el dato clave con color de acento, no con tamaño diminuto. Sin superlativos vacíos, sin emoji, sin exclamaciones apiladas.</p></div>
+        <div class="card">
+          <h4>Logo de cierre</h4>
+          <p>Siempre el logo SVG real, nunca el nombre escrito simulándolo. Versión negativa sobre oscuro, a color sobre claro. Tamaño consistente en todo el set y con su zona de protección. Variantes en <b>02 · Logo</b>.</p></div>
+      </div>
+
+      <!-- Legibilidad móvil -->
+      <div class="comp__label reveal">Legibilidad · piensa en el móvil</div>
+      <div class="callout reveal" style="margin-bottom:38px"><b>Lo que se ve pequeño en el lienzo, en el teléfono no se lee.</b> Diseña simulando el ancho de un celular antes de exportar. Los textos secundarios (cuerpo, labels, captions, URL, chips) deben seguir legibles al reducir la pieza a ese ancho — ante la duda, agranda. Contraste suficiente: texto claro sobre la zona ya oscura del fade, nunca sobre foto a media luz.</div>
+
+      <!-- Checklist -->
+      <div class="comp__label reveal">Verificación antes de exportar</div>
+      <ul class="precheck reveal" style="margin:14px 0 8px">
+        <li><span class="bx"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span><div>Revisé <b>cada pieza</b> visualmente, no solo una muestra.</div></li>
+        <li><span class="bx"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span><div>Todas son <b>distintas</b>: no se duplicó ninguna.</div></li>
+        <li><span class="bx"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span><div>Márgenes y footer <b>anclados igual</b> en todo el set.</div></li>
+        <li><span class="bx"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span><div>El <b>aire reservado</b> al cierre está intacto en todas.</div></li>
+        <li><span class="bx"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span><div>Legible <b>simulando tamaño móvil</b>, texto secundario incluido.</div></li>
+        <li><span class="bx"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span><div>Logo SVG real, versión correcta, y <b>cada cifra</b> con su dato.</div></li>
+      </ul>
+
       <!-- ============ PRUEBA ============ -->
-      <div class="sub-h reveal"><span class="mono">E</span>La prueba de pertenencia</div>
+      <div class="sub-h reveal"><span class="mono">F</span>La prueba de pertenencia</div>
       <div class="fgrid fg-2 reveal" style="margin:12px 0 18px">
         <div class="frame cross"><img class="photo raw" src="photos/van.jpg" alt=""><span class="tag tag--no">Genérico</span>
           <div class="cap">Podría estar en la web de cualquier competidor</div></div>
