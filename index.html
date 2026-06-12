@@ -1795,7 +1795,7 @@ html.js .reveal.in{opacity:1;transform:none}
     var cv=document.createElement('canvas'); cv.width=W; cv.height=H;
     var ctx=cv.getContext('2d'); ctx.drawImage(img,0,0,W,H);
     var d=ctx.getImageData(0,0,W,H).data;
-    var n=0,dark=0,bright=0,mag=0,cyan=0,off=0,nbSatSum=0,nbSatN=0,lumSum=0;
+    var n=0,dark=0,bright=0,light=0,mag=0,cyan=0,off=0,nbSatSum=0,nbSatN=0,lumSum=0;
     var topLum=0,topN=0,botLum=0,botN=0, t1=H/3, t2=H*2/3;
     for(var y=0;y<H;y++) for(var x=0;x<W;x++){
       var i=(y*W+x)*4, r=d[i],g=d[i+1],b=d[i+2];
@@ -1804,6 +1804,7 @@ html.js .reveal.in{opacity:1;transform:none}
       if(y<t1){topLum+=l;topN++;} else if(y>t2){botLum+=l;botN++;}
       if(l<0.22) dark++;
       if(l>0.80) bright++;
+      if(l>0.55) light++; // "contenido claro" — la fotografía de marca es subexpuesta, no high-key
       // ventanas estrictas ancladas a los hex reales: cyan #009CC9 (H191) · magenta #A3086A (H322)
       var isMag = s>0.45 && h>=305 && h<=338 && l>=0.12 && l<=0.58;
       var isCyan= s>0.45 && h>=183 && h<=201 && l>=0.18 && l<=0.62;
@@ -1812,9 +1813,9 @@ html.js .reveal.in{opacity:1;transform:none}
       if(isMag) mag++;
       else if(isCyan) cyan++;
       else if(isErr){ /* rojo error — permitido, no penaliza */ }
-      else if(!inArc && s>0.18 && l>0.06 && l<0.94){ nbSatSum+=s; nbSatN++; if(s>0.25 && l<0.92) off++; }
+      else if(!inArc && s>0.16 && l>0.06 && l<0.97){ nbSatSum+=s; nbSatN++; if(s>0.22 && l<0.96) off++; }
     }
-    var darkR=dark/n, brightR=bright/n, magR=mag/n, cyanR=cyan/n, brandR=magR+cyanR, offR=off/n;
+    var darkR=dark/n, brightR=bright/n, lightR=light/n, magR=mag/n, cyanR=cyan/n, brandR=magR+cyanR, offR=off/n;
     var nbMeanSat=nbSatN?nbSatSum/nbSatN:0, nbFrac=nbSatN/n;
     var topMean=topN?topLum/topN:lumSum/n, botMean=botN?botLum/botN:lumSum/n;
     var darkestThird=Math.min(topMean,botMean);
@@ -1823,8 +1824,10 @@ html.js .reveal.in{opacity:1;transform:none}
     // 1 · dark-first (fundamental: ZenderHub no tiene versión clara)
     var sDark=Math.round(clamp(lin(darkR,0.18,4,0.62,100),3,100));
     if(brightR>0.22) sDark=Math.round(sDark*clamp(1-(brightR-0.22)*1.4,0.25,1));
-    var rDark=sDark>=80?'Fondo oscuro dominante, correcto para dark-first.'
-      :'El lienzo se ve claro. ZenderHub es <b>dark-first (#0A0A0F)</b> — no tiene versión clara. Oscurece el fondo o aplica el fade de marca.';
+    if(lightR>0.26) sDark=Math.round(sDark*clamp(1-(lightR-0.26)*1.5,0.18,1)); // contenido claro/high-key penaliza aunque haya márgenes negros
+    var rDark=sDark>=80?'Fondo y contenido oscuros, correcto para dark-first.'
+      :(lightR>0.30?'El contenido es claro/high-key (fotografía a plena luz). La fotografía de marca es <b>oscura y subexpuesta</b> — un marco negro no basta si las fotos son luminosas.'
+        :'El lienzo se ve claro. ZenderHub es <b>dark-first (#0A0A0F)</b> — no tiene versión clara. Oscurece el fondo o aplica el fade de marca.');
 
     // 2 · color de marca (presencia; sin penalizar por usar mucho gradiente)
     var sBrand, rBrand;
@@ -1871,8 +1874,9 @@ html.js .reveal.in{opacity:1;transform:none}
     // GATES — un fallo de marca fundamental no se promedia: tapa el score
     if(darkR<0.26) overall=Math.min(overall,10);          // no es dark-first
     else if(darkR<0.42) overall=Math.min(overall,58);     // poco oscuro
+    if(lightR>0.38) overall=Math.min(overall,26);          // contenido claro/high-key (fotos a plena luz)
     if(brightR>0.45) overall=Math.min(overall,14);         // dominado por claro/blanco
-    if(offR>0.30) overall=Math.min(overall,12);            // paleta fuera de marca
+    if(offR>0.26) overall=Math.min(overall,12);            // paleta fuera de marca (verdes, amarillos, cálidos)
     if(brandR<0.003) overall=Math.min(overall,62);         // sin nada de color de marca
 
     // firma de color 8x8 (RGB por celda) para detectar duplicados en un set
