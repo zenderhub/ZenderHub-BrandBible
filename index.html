@@ -589,7 +589,7 @@ html.js .reveal.in{opacity:1;transform:none}
 .kfact .v{font-family:var(--font-display);font-weight:800;font-size:24px}
 .kfact .l{font-family:var(--font-mono);font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--color-text-tertiary);margin-top:4px}
 
-/* ===== ZenderHub Checker ===== */
+/* ===== Visual Checker ===== */
 .zc-fab{position:fixed;left:24px;bottom:24px;z-index:60;display:inline-flex;align-items:center;gap:10px;
   padding:13px 18px 13px 15px;border:0;cursor:pointer;border-radius:999px;background:var(--gradient-signature);
   color:#fff;font-family:var(--font-display);font-weight:700;text-transform:uppercase;letter-spacing:.01em;font-size:13.5px;
@@ -614,6 +614,10 @@ html.js .reveal.in{opacity:1;transform:none}
   background:var(--color-surface-overlay);display:grid;place-content:center;cursor:pointer}
 .zc-x svg{width:17px;height:17px;stroke:var(--color-text-primary);fill:none;stroke-width:2.2;stroke-linecap:round}
 .zc-body{padding:22px 26px 28px}
+.zc-disc{display:flex;gap:11px;align-items:flex-start;border:1px solid var(--color-border-subtle);background:var(--gradient-soft);border-radius:var(--radius-tile);padding:13px 15px;margin-bottom:20px}
+.zc-disc svg{width:16px;height:16px;flex:0 0 auto;margin-top:2px;stroke:var(--color-brand-primary-accessible);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.zc-disc p{margin:0;font-size:12px;line-height:1.55;color:var(--color-text-tertiary)}
+.zc-disc b{color:var(--color-text-secondary);font-weight:600}
 
 .zc-drop{border:1.5px dashed var(--color-border-default);border-radius:var(--radius-tile);padding:38px 24px;text-align:center;cursor:pointer;
   transition:border-color var(--dur-base) var(--ease),background var(--dur-base) var(--ease)}
@@ -1596,10 +1600,10 @@ html.js .reveal.in{opacity:1;transform:none}
 
 <div class="toast" id="toast">Copiado · <b id="toastval">#A3086A</b></div>
 
-<!-- ===== ZenderHub Checker ===== -->
+<!-- ===== Visual Checker ===== -->
 <button class="zc-fab" id="zcFab" aria-haspopup="dialog" aria-controls="zcOverlay">
   <svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.4-3 7.7-7 9-4-1.3-7-4.6-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>
-  <span class="zc-fab__t">ZenderHub Checker</span>
+  <span class="zc-fab__t">Visual Checker</span>
 </button>
 
 <div class="zc-overlay" id="zcOverlay" role="dialog" aria-modal="true" aria-labelledby="zcTitle" aria-hidden="true">
@@ -1607,7 +1611,7 @@ html.js .reveal.in{opacity:1;transform:none}
     <div class="zc-modal__head">
       <div>
         <div class="eyebrow">Brand checker</div>
-        <h3 id="zcTitle">ZenderHub Checker</h3>
+        <h3 id="zcTitle">Visual Checker</h3>
         <p>Sube una pieza o un carrusel completo y lo evaluamos contra los tokens de marca: fondo dark-first, color de marca, disciplina de paleta, grading, formato social y zona de texto. En un set también revisamos consistencia y duplicados. Más un checklist de lo que no se ve en los pixeles.</p>
       </div>
       <button class="zc-x" id="zcClose" aria-label="Cerrar checker">
@@ -1615,6 +1619,10 @@ html.js .reveal.in{opacity:1;transform:none}
       </button>
     </div>
     <div class="zc-body">
+      <div class="zc-disc">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 7.5h.01"/></svg>
+        <p><b>Esto es una guía, no un veredicto.</b> El checker mide solo lo medible en los pixeles: color, luz, saturación y formato. <b>No revisa tipografía, copy, ortografía, el logo ni la jerarquía del texto</b> — eso queda en el checklist manual y en tu criterio. Tómalo como orientación junto al brand bible, no como aprobación final.</p>
+      </div>
       <!-- Upload -->
       <div id="zcUpload">
         <div class="zc-drop" id="zcDrop" tabindex="0" role="button" aria-label="Subir imagen">
@@ -1753,7 +1761,7 @@ html.js .reveal.in{opacity:1;transform:none}
 </script>
 
 <script>
-/* ===== ZenderHub Checker — análisis 100% en el navegador ===== */
+/* ===== Visual Checker — análisis 100% en el navegador ===== */
 (function(){
   var $=function(id){return document.getElementById(id);};
   var fab=$('zcFab'), overlay=$('zcOverlay'), modal=$('zcModal'), closeB=$('zcClose'),
