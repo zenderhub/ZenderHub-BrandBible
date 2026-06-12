@@ -588,6 +588,84 @@ html.js .reveal.in{opacity:1;transform:none}
 .kfact{border:1px solid var(--color-border-subtle);border-radius:var(--radius-tile);padding:14px 18px;background:var(--color-surface-raised);flex:1;min-width:150px}
 .kfact .v{font-family:var(--font-display);font-weight:800;font-size:24px}
 .kfact .l{font-family:var(--font-mono);font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--color-text-tertiary);margin-top:4px}
+
+/* ===== ZenderHub Checker ===== */
+.zc-fab{position:fixed;left:24px;bottom:24px;z-index:60;display:inline-flex;align-items:center;gap:10px;
+  padding:13px 18px 13px 15px;border:0;cursor:pointer;border-radius:999px;background:var(--gradient-signature);
+  color:#fff;font-family:var(--font-display);font-weight:700;text-transform:uppercase;letter-spacing:.01em;font-size:13.5px;
+  box-shadow:0 8px 30px -6px rgba(163,8,106,.6),0 0 0 1px rgba(255,255,255,.06) inset;
+  transition:transform var(--dur-base) var(--ease),filter var(--dur-base) var(--ease),box-shadow var(--dur-base) var(--ease)}
+.zc-fab:hover{filter:brightness(1.08);transform:translateY(-2px);box-shadow:0 14px 40px -6px rgba(163,8,106,.8),0 0 0 1px rgba(255,255,255,.06) inset}
+.zc-fab svg{width:19px;height:19px;stroke:#fff;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+@media(max-width:560px){.zc-fab .zc-fab__t{display:none}.zc-fab{padding:14px;left:16px;bottom:16px}}
+
+.zc-overlay{position:fixed;inset:0;z-index:90;background:rgba(6,6,12,.74);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  opacity:0;pointer-events:none;transition:opacity var(--dur-slow) var(--ease);display:grid;place-items:center;padding:24px}
+.zc-overlay.show{opacity:1;pointer-events:auto}
+.zc-modal{width:min(760px,100%);max-height:90vh;overflow:auto;background:var(--color-surface-raised);border:1px solid var(--color-border-default);
+  border-radius:var(--radius-card);box-shadow:var(--shadow-panel);transform:translateY(14px) scale(.99);transition:transform var(--dur-slow) var(--ease)}
+.zc-overlay.show .zc-modal{transform:none}
+.zc-modal__head{position:sticky;top:0;z-index:2;display:flex;align-items:flex-start;gap:16px;padding:24px 26px 18px;
+  background:linear-gradient(180deg,var(--color-surface-raised),rgba(16,16,24,.96));border-bottom:1px solid var(--color-border-subtle)}
+.zc-modal__head .eyebrow{margin-bottom:7px}
+.zc-modal__head h3{font-family:var(--font-display);font-weight:800;text-transform:uppercase;letter-spacing:-.02em;font-size:23px;margin:0;line-height:1}
+.zc-modal__head p{margin:8px 0 0;font-size:13px;line-height:1.5;color:var(--color-text-tertiary);max-width:560px}
+.zc-x{margin-left:auto;width:36px;height:36px;flex:0 0 auto;border-radius:10px;border:1px solid var(--color-border-default);
+  background:var(--color-surface-overlay);display:grid;place-content:center;cursor:pointer}
+.zc-x svg{width:17px;height:17px;stroke:var(--color-text-primary);fill:none;stroke-width:2.2;stroke-linecap:round}
+.zc-body{padding:22px 26px 28px}
+
+.zc-drop{border:1.5px dashed var(--color-border-default);border-radius:var(--radius-tile);padding:38px 24px;text-align:center;cursor:pointer;
+  transition:border-color var(--dur-base) var(--ease),background var(--dur-base) var(--ease)}
+.zc-drop:hover,.zc-drop.drag{border-color:var(--color-brand-primary-soft);background:var(--gradient-soft)}
+.zc-drop .ic{width:46px;height:46px;margin:0 auto 14px;border-radius:13px;background:var(--gradient-signature);display:grid;place-content:center}
+.zc-drop .ic svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.zc-drop h4{font-family:var(--font-body);font-weight:600;font-size:15px;margin:0 0 5px;color:var(--color-text-primary)}
+.zc-drop p{margin:0;font-size:12.5px;color:var(--color-text-tertiary)}
+.zc-priv{margin-top:14px;font-family:var(--font-mono);font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--color-text-muted);text-align:center}
+
+.zc-result{margin-top:4px}
+.zc-top{display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:center;margin-bottom:24px}
+@media(max-width:520px){.zc-top{grid-template-columns:1fr;justify-items:center;text-align:center}}
+.zc-ring{position:relative;width:118px;height:118px;flex:0 0 auto}
+.zc-ring svg{transform:rotate(-90deg)}
+.zc-ring .val{position:absolute;inset:0;display:grid;place-content:center;text-align:center}
+.zc-ring .val b{font-family:var(--font-display);font-weight:800;font-size:34px;letter-spacing:-.03em;line-height:1}
+.zc-ring .val span{font-family:var(--font-mono);font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--color-text-tertiary);display:block;margin-top:3px}
+.zc-verdict h4{font-family:var(--font-display);font-weight:800;text-transform:uppercase;font-size:22px;letter-spacing:-.02em;margin:0 0 6px;line-height:1.05}
+.zc-verdict p{margin:0;font-size:13.5px;line-height:1.5;color:var(--color-text-secondary)}
+.zc-preview{margin:0 0 22px;border-radius:var(--radius-tile);overflow:hidden;border:1px solid var(--color-border-subtle);max-height:200px;display:grid;place-items:center;background:#06060a}
+.zc-preview img{max-width:100%;max-height:200px;display:block}
+
+.zc-dim{display:flex;flex-direction:column;gap:2px;padding:14px 0;border-top:1px solid var(--color-border-subtle)}
+.zc-dim__row{display:flex;align-items:center;gap:12px}
+.zc-dim__row .nm{font-family:var(--font-body);font-weight:600;font-size:14px;color:var(--color-text-primary)}
+.zc-chip{margin-left:auto;font-family:var(--font-mono);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;padding:3px 9px;border-radius:999px;white-space:nowrap}
+.zc-chip.ok{color:var(--color-status-success);background:rgba(91,227,167,.14)}
+.zc-chip.warn{color:#F0A52E;background:rgba(240,165,46,.14)}
+.zc-chip.bad{color:#ff8a8a;background:rgba(204,17,17,.18)}
+.zc-bar{height:6px;border-radius:999px;background:rgba(255,255,255,.07);overflow:hidden;margin:9px 0 7px}
+.zc-bar i{display:block;height:100%;border-radius:999px;transition:width var(--dur-slow) var(--ease)}
+.zc-dim__rec{font-size:12.5px;line-height:1.5;color:var(--color-text-tertiary)}
+.zc-dim__rec b{color:var(--color-text-secondary);font-weight:600}
+
+.zc-check{margin-top:26px;border-top:1px solid var(--color-border-default);padding-top:22px}
+.zc-check h5{font-family:var(--font-display);font-weight:700;text-transform:uppercase;font-size:14px;letter-spacing:-.01em;margin:0 0 4px}
+.zc-check .sub{font-size:12px;color:var(--color-text-tertiary);margin:0 0 14px;line-height:1.5}
+.zc-check label{display:flex;gap:11px;align-items:flex-start;padding:9px 0;font-size:13.5px;color:var(--color-text-secondary);cursor:pointer;line-height:1.45}
+.zc-check input{appearance:none;-webkit-appearance:none;width:20px;height:20px;flex:0 0 auto;margin-top:1px;border-radius:6px;border:1.5px solid var(--color-border-default);background:var(--color-surface-overlay);cursor:pointer;position:relative;transition:background var(--dur-base) var(--ease),border-color var(--dur-base) var(--ease)}
+.zc-check input:checked{background:var(--gradient-signature);border-color:transparent}
+.zc-check input:checked::after{content:"";position:absolute;left:6px;top:2px;width:5px;height:10px;border:solid #fff;border-width:0 2.4px 2.4px 0;transform:rotate(45deg)}
+.zc-check .tally{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--color-text-tertiary);margin-top:8px}
+
+.zc-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.zc-btn{font-family:var(--font-display);font-weight:700;text-transform:uppercase;font-size:14px;letter-spacing:.01em;border:0;border-radius:999px;padding:13px 22px;cursor:pointer;transition:filter var(--dur-base) var(--ease),background var(--dur-base) var(--ease)}
+.zc-btn--p{background:var(--color-brand-primary);color:#fff;box-shadow:var(--shadow-btn)}
+.zc-btn--p:hover{background:linear-gradient(90deg,var(--color-brand-primary-soft),var(--color-brand-accent));filter:brightness(1.04)}
+.zc-btn--g{background:var(--color-surface-overlay);color:var(--color-text-primary);border:1px solid var(--color-border-default)}
+.zc-btn--g:hover{filter:brightness(1.2)}
+.zc-hidden{display:none !important}
+@media (prefers-reduced-motion:reduce){.zc-overlay,.zc-modal,.zc-bar i{transition:none}}
 </style>
 </head>
 
@@ -1506,6 +1584,71 @@ html.js .reveal.in{opacity:1;transform:none}
 
 <div class="toast" id="toast">Copiado · <b id="toastval">#A3086A</b></div>
 
+<!-- ===== ZenderHub Checker ===== -->
+<button class="zc-fab" id="zcFab" aria-haspopup="dialog" aria-controls="zcOverlay">
+  <svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.4-3 7.7-7 9-4-1.3-7-4.6-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>
+  <span class="zc-fab__t">ZenderHub Checker</span>
+</button>
+
+<div class="zc-overlay" id="zcOverlay" role="dialog" aria-modal="true" aria-labelledby="zcTitle" aria-hidden="true">
+  <div class="zc-modal" id="zcModal">
+    <div class="zc-modal__head">
+      <div>
+        <div class="eyebrow">Brand checker</div>
+        <h3 id="zcTitle">ZenderHub Checker</h3>
+        <p>Sube una pieza visual y la evaluamos contra los tokens de marca: fondo dark-first, color de marca, disciplina de paleta, grading, formato social y zona de texto. Más un checklist de lo que no se ve en los pixeles.</p>
+      </div>
+      <button class="zc-x" id="zcClose" aria-label="Cerrar checker">
+        <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="zc-body">
+      <!-- Upload -->
+      <div id="zcUpload">
+        <div class="zc-drop" id="zcDrop" tabindex="0" role="button" aria-label="Subir imagen">
+          <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M5 16v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3"/></svg></div>
+          <h4>Arrastra una imagen o haz clic para subir</h4>
+          <p>JPG, PNG o WebP · piezas para feed, story, reel o web</p>
+        </div>
+        <div class="zc-priv">La imagen se analiza en tu navegador · no se sube a ningún servidor</div>
+        <input type="file" id="zcFile" accept="image/*" class="zc-hidden">
+      </div>
+
+      <!-- Result -->
+      <div class="zc-result zc-hidden" id="zcResult">
+        <div class="zc-preview"><img id="zcImg" alt="Pieza analizada"></div>
+        <div class="zc-top">
+          <div class="zc-ring">
+            <svg width="118" height="118" viewBox="0 0 118 118">
+              <circle cx="59" cy="59" r="52" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="9"/>
+              <circle id="zcRing" cx="59" cy="59" r="52" fill="none" stroke="#5BE3A7" stroke-width="9" stroke-linecap="round" stroke-dasharray="326.7" stroke-dashoffset="326.7"/>
+            </svg>
+            <div class="val"><b id="zcScore">0</b><span>/ 100</span></div>
+          </div>
+          <div class="zc-verdict">
+            <h4 id="zcVerdict">Analizando…</h4>
+            <p id="zcVerdictSub"></p>
+          </div>
+        </div>
+
+        <div id="zcDims"></div>
+
+        <div class="zc-check">
+          <h5>Checklist manual</h5>
+          <p class="sub">Esto no se detecta en la imagen — confírmalo tú antes de publicar.</p>
+          <div id="zcChecklist"></div>
+          <div class="tally" id="zcTally">0 / 6 confirmados</div>
+        </div>
+
+        <div class="zc-actions">
+          <button class="zc-btn zc-btn--p" id="zcAgain">Analizar otra</button>
+          <button class="zc-btn zc-btn--g" id="zcDone">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
 (function(){
   document.documentElement.classList.add('js');
@@ -1571,6 +1714,197 @@ html.js .reveal.in{opacity:1;transform:none}
   function toggle(){var on=sw.classList.toggle('on'); sw.setAttribute('aria-checked',on); swlabel.textContent=on?'on':'off';}
   sw.addEventListener('click',toggle);
   sw.addEventListener('keydown',function(e){if(e.key===' '||e.key==='Enter'){e.preventDefault();toggle();}});
+})();
+</script>
+
+<script>
+/* ===== ZenderHub Checker — análisis 100% en el navegador ===== */
+(function(){
+  var $=function(id){return document.getElementById(id);};
+  var fab=$('zcFab'), overlay=$('zcOverlay'), modal=$('zcModal'), closeB=$('zcClose'),
+      drop=$('zcDrop'), file=$('zcFile'), uploadV=$('zcUpload'), resultV=$('zcResult'),
+      imgEl=$('zcImg'), ring=$('zcRing'), scoreEl=$('zcScore'), verdictEl=$('zcVerdict'),
+      verdictSub=$('zcVerdictSub'), dimsEl=$('zcDims'), checklistEl=$('zcChecklist'),
+      tallyEl=$('zcTally'), againB=$('zcAgain'), doneB=$('zcDone');
+  if(!fab) return;
+  var C=2*Math.PI*52; // 326.73
+
+  function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
+  function lin(x,x0,y0,x1,y1){ if(x1===x0) return y0; var t=clamp((x-x0)/(x1-x0),0,1); return y0+(y1-y0)*t; }
+
+  function rgbToHsl(r,g,b){
+    r/=255;g/=255;b/=255;
+    var mx=Math.max(r,g,b),mn=Math.min(r,g,b),h=0,s=0,l=(mx+mn)/2;
+    if(mx!==mn){var d=mx-mn; s=l>0.5?d/(2-mx-mn):d/(mx+mn);
+      if(mx===r)h=(g-b)/d+(g<b?6:0); else if(mx===g)h=(b-r)/d+2; else h=(r-g)/d+4; h*=60;}
+    return [h,s,l];
+  }
+
+  function analyze(img){
+    var W=160, H=Math.max(1,Math.round(W*img.naturalHeight/img.naturalWidth));
+    var cv=document.createElement('canvas'); cv.width=W; cv.height=H;
+    var ctx=cv.getContext('2d'); ctx.drawImage(img,0,0,W,H);
+    var d=ctx.getImageData(0,0,W,H).data;
+    var n=0,dark=0,bright=0,mag=0,cyan=0,off=0,satSum=0,satN=0,lumSum=0;
+    var topLum=0,topN=0,botLum=0,botN=0, t1=H/3, t2=H*2/3;
+    for(var y=0;y<H;y++) for(var x=0;x<W;x++){
+      var i=(y*W+x)*4, r=d[i],g=d[i+1],b=d[i+2];
+      var hsl=rgbToHsl(r,g,b),h=hsl[0],s=hsl[1],l=hsl[2];
+      n++; lumSum+=l;
+      if(y<t1){topLum+=l;topN++;} else if(y>t2){botLum+=l;botN++;}
+      if(l<0.22) dark++;
+      if(l>0.85) bright++;
+      if(s>0.18 && l>0.06 && l<0.94){satSum+=s;satN++;}
+      if(s>0.22 && h>=298 && h<=344 && l>0.07 && l<0.80) mag++;
+      else if(s>0.22 && h>=176 && h<=208 && l>0.07 && l<0.85) cyan++;
+      else if(s>0.45 && (h<=12||h>=348)) {/* error red — permitido */}
+      else if(s>0.30 && l>0.10 && l<0.92) off++;
+    }
+    var darkR=dark/n, brightR=bright/n, magR=mag/n, cyanR=cyan/n, brandR=magR+cyanR, offR=off/n;
+    var meanSat=satN?satSum/satN:0, colorFrac=satN/n;
+    var topMean=topN?topLum/topN:lumSum/n, botMean=botN?botLum/botN:lumSum/n;
+    var darkestThird=Math.min(topMean,botMean);
+    var ar=img.naturalWidth/img.naturalHeight;
+
+    // 1 · dark-first
+    var sDark=Math.round(clamp(lin(darkR,0.12,8,0.60,100),5,100));
+    if(brightR>0.30) sDark=Math.round(sDark*0.6);
+    var rDark=sDark>=80?'Fondo oscuro dominante, correcto para dark-first.'
+      :'El lienzo se ve claro. ZenderHub es <b>dark-first (#0A0A0F)</b>: oscurece el fondo o aplica el fade de marca antes del texto.';
+
+    // 2 · color de marca
+    var sBrand, rBrand;
+    if(brandR<0.004){ sBrand=18; rBrand='No se detecta color de marca. Suma un acento <b>magenta #A3086A</b> o <b>cyan #009CC9</b> (un destello, datos clave o el cierre).'; }
+    else if(brandR<=0.20){ sBrand=Math.round(lin(brandR,0.004,72,0.02,100));
+      rBrand=(magR>0.002&&cyanR>0.002)?'Aparecen magenta y cyan: el gradiente firma está presente.':'Color de marca presente como acento. Bien.'; }
+    else { sBrand=Math.round(lin(brandR,0.20,100,0.45,50)); rBrand='Mucho color de marca a full-bleed. El magenta/cyan debe ser un <b>destello</b> sobre el negro, no cubrir la pieza.'; }
+
+    // 3 · disciplina de paleta
+    var sPal=Math.round(clamp(100-offR*420,0,100));
+    var rPal=sPal>=80?'Paleta disciplinada: magenta + cyan + neutros.'
+      :'Colores fuera de paleta detectados ('+Math.round(offR*100)+'%). ZenderHub usa <b>solo magenta, cyan y neutros</b>; el rojo, solo para error.';
+
+    // 4 · grading / saturación
+    var sGrade, rGrade;
+    if(colorFrac<0.04){ sGrade=85; rGrade='Imagen casi neutra; el grading no es crítico aquí.'; }
+    else { sGrade=Math.round(clamp(lin(meanSat,0.78,40,0.40,100),20,100));
+      rGrade=sGrade>=80?'Saturación dentro del grading de marca.':'Imagen muy saturada. Aplica el grading: <b>brightness .84 · saturate .78</b> para que el color no compita.'; }
+
+    // 5 · formato social
+    var sFmt=62, fLabel, rFmt;
+    if(Math.abs(ar-1)<0.05){fLabel='1:1 · feed';sFmt=100;}
+    else if(Math.abs(ar-0.8)<0.05){fLabel='4:5 · feed vertical';sFmt=100;}
+    else if(Math.abs(ar-0.5625)<0.04){fLabel='9:16 · story / reel';sFmt=100;}
+    else if(Math.abs(ar-1.7778)<0.09){fLabel='16:9 · video / web';sFmt=100;}
+    else { fLabel=(ar<1?'vertical':'horizontal')+' no estándar · '+ar.toFixed(2); }
+    rFmt=sFmt===100?'Formato social estándar.':'Formato no estándar. Usa <b>1:1, 4:5, 9:16 o 16:9</b> según el canal.';
+
+    // 6 · zona de texto
+    var sText=Math.round(clamp(lin(darkestThird,0.55,30,0.16,100),20,100));
+    if(botMean<topMean-0.08) sText=Math.min(100,sText+8);
+    var rText=sText>=80?'Hay una zona oscura y limpia para el texto.'
+      :'Asegura una <b>zona oscura</b> donde caiga el texto; usa el fade de marca (varias paradas, sin corte seco).';
+
+    var dims=[
+      {nm:'Fondo dark-first', s:sDark, rec:rDark, w:1.3},
+      {nm:'Color de marca', s:sBrand, rec:rBrand, w:1.2},
+      {nm:'Disciplina de paleta', s:sPal, rec:rPal, w:1.2},
+      {nm:'Grading · saturación', s:sGrade, rec:rGrade, w:0.9},
+      {nm:'Formato social', s:sFmt, rec:rFmt, w:0.8, extra:fLabel},
+      {nm:'Zona de texto', s:sText, rec:rText, w:1.0}
+    ];
+    var tw=0,acc=0; dims.forEach(function(x){tw+=x.w;acc+=x.s*x.w;});
+    return {overall:Math.round(acc/tw), dims:dims};
+  }
+
+  function verdict(o){
+    if(o>=85) return ['On-brand','#5BE3A7','Esta pieza respira ZenderHub. Lista tras confirmar el checklist.'];
+    if(o>=70) return ['Casi on-brand','#2BB8E0','Bien encaminada. Aplica lo marcado en ámbar.'];
+    if(o>=50) return ['Necesita ajustes','#F0A52E','Hay desviaciones de marca a corregir antes de publicar.'];
+    return ['Off-brand','#ff6b6b','No sigue el sistema. Revisa color, luz y formato desde la base.'];
+  }
+
+  function render(res){
+    var v=verdict(res.overall);
+    ring.setAttribute('stroke',v[1]);
+    ring.style.strokeDashoffset=C; // reset for animation
+    verdictEl.textContent=v[0]; verdictEl.style.color=v[1]; verdictSub.textContent=v[2];
+    dimsEl.innerHTML=res.dims.map(function(d){
+      var st=d.s>=80?'ok':(d.s>=55?'warn':'bad');
+      var col=st==='ok'?'#5BE3A7':(st==='warn'?'#F0A52E':'#ff6b6b');
+      var chip=st==='ok'?'bien':(st==='warn'?'revisar':'corrige');
+      var nm=d.nm+(d.extra?' · <span style="color:var(--color-text-tertiary);font-weight:500">'+d.extra+'</span>':'');
+      return '<div class="zc-dim"><div class="zc-dim__row"><span class="nm">'+nm+'</span><span class="zc-chip '+st+'">'+chip+'</span></div>'+
+        '<div class="zc-bar"><i data-w="'+d.s+'" style="width:0;background:'+col+'"></i></div>'+
+        '<div class="zc-dim__rec">'+d.rec+'</div></div>';
+    }).join('');
+    uploadV.classList.add('zc-hidden'); resultV.classList.remove('zc-hidden');
+    // estado final SIEMPRE escrito (correcto aunque rAF esté pausado); transición como mejora
+    scoreEl.textContent=res.overall;
+    void ring.getBoundingClientRect(); // reflow → dispara la transición sin depender de rAF
+    ring.style.strokeDashoffset=C*(1-res.overall/100);
+    var bars=dimsEl.querySelectorAll('.zc-bar i');
+    void dimsEl.getBoundingClientRect();
+    bars.forEach(function(i){ i.style.width=i.getAttribute('data-w')+'%'; });
+    animateNumber(res.overall);
+  }
+
+  function animateNumber(target){
+    scoreEl.textContent=target;
+    var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+    if(reduce||!window.requestAnimationFrame) return;
+    var start=null, dur=700;
+    function step(t){ if(start===null)start=t; var p=clamp((t-start)/dur,0,1); scoreEl.textContent=Math.round(target*(1-Math.pow(1-p,3))); if(p<1) requestAnimationFrame(step); else scoreEl.textContent=target; }
+    requestAnimationFrame(step);
+    setTimeout(function(){ scoreEl.textContent=target; }, dur+120); // red de seguridad si rAF se pausa
+  }
+
+  function handleFile(f){
+    if(!f||!/^image\//.test(f.type)) return;
+    var url=URL.createObjectURL(f);
+    var img=new Image();
+    img.onload=function(){ imgEl.src=url; render(analyze(img)); };
+    img.onerror=function(){ URL.revokeObjectURL(url); };
+    img.src=url;
+  }
+
+  function buildChecklist(){
+    var items=[
+      'Logo SVG real (no el nombre escrito simulando el logo)',
+      'Dos voces: titular Exo en mayúsculas + apoyo en Jakarta',
+      'Cada afirmación de valor lleva una cifra detrás',
+      'Aire reservado entre el contenido y el cierre (logo + CTA)',
+      'Sin emoji, sin em-dashes, sin exclamaciones apiladas',
+      'Recortes y cards con el radius de marca (23px)'
+    ];
+    checklistEl.innerHTML=items.map(function(t){return '<label><input type="checkbox"><span>'+t+'</span></label>';}).join('');
+    var boxes=checklistEl.querySelectorAll('input');
+    function tally(){ var k=0; boxes.forEach(function(b){if(b.checked)k++;}); tallyEl.textContent=k+' / '+boxes.length+' confirmados'; }
+    boxes.forEach(function(b){ b.addEventListener('change',tally); });
+    tally();
+  }
+
+  function reset(){ resultV.classList.add('zc-hidden'); uploadV.classList.remove('zc-hidden'); file.value=''; }
+
+  var lastFocus=null;
+  function open(){ lastFocus=document.activeElement; reset(); overlay.classList.add('show'); overlay.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; closeB.focus(); }
+  function close(){ overlay.classList.remove('show'); overlay.setAttribute('aria-hidden','true'); document.body.style.overflow=''; if(lastFocus) lastFocus.focus(); }
+
+  fab.addEventListener('click',open);
+  closeB.addEventListener('click',close);
+  doneB.addEventListener('click',close);
+  againB.addEventListener('click',reset);
+  overlay.addEventListener('click',function(e){ if(e.target===overlay) close(); });
+  window.addEventListener('keydown',function(e){ if(e.key==='Escape'&&overlay.classList.contains('show')) close(); });
+
+  drop.addEventListener('click',function(){ file.click(); });
+  drop.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); file.click(); } });
+  file.addEventListener('change',function(){ if(file.files&&file.files[0]) handleFile(file.files[0]); });
+  ['dragenter','dragover'].forEach(function(ev){ drop.addEventListener(ev,function(e){ e.preventDefault(); drop.classList.add('drag'); }); });
+  ['dragleave','dragend'].forEach(function(ev){ drop.addEventListener(ev,function(){ drop.classList.remove('drag'); }); });
+  drop.addEventListener('drop',function(e){ e.preventDefault(); drop.classList.remove('drag'); if(e.dataTransfer.files&&e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]); });
+
+  buildChecklist();
 })();
 </script>
 </body>
