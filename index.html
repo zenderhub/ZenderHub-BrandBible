@@ -1,0 +1,1399 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ZenderHub · Brandbook</title>
+<meta name="description" content="Sistema de marca de ZenderHub — guidelines de identidad visual, color, tipografía, componentes y voz. Extraído del código de producción. v1.0.0" />
+<meta name="robots" content="noindex" />
+
+<link rel="icon" href="logos/zenderhub-favicon-color.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Exo:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<style>
+/* ============================================================
+   ZenderHub Design System — tokens (mirror of /design-system)
+   This brandbook is itself built ON the system it documents.
+   ============================================================ */
+:root{
+  /* brand */
+  --color-brand-primary:#A3086A;
+  --color-brand-primary-soft:#C8228A;
+  --color-brand-primary-accessible:#D44FA0;
+  --color-brand-primary-deep:#6F0548;
+  --color-brand-accent:#009CC9;
+  --color-brand-accent-soft:#2BB8E0;
+  /* surfaces */
+  --color-surface-base:#0A0A0F;
+  --color-surface-raised:#101018;
+  --color-surface-overlay:#15151F;
+  --color-surface-elevated:#1B1B27;
+  /* text */
+  --color-text-primary:#F4F4F7;
+  --color-text-secondary:#B4B4C0;
+  --color-text-tertiary:#7E7E8E;
+  --color-text-muted:#6A6A7A;
+  /* status */
+  --color-status-success:#5BE3A7;
+  --color-status-warning:#E6A24D;
+  --color-status-error:#CC1111;
+  --color-status-info:#009CC9;
+  /* borders */
+  --color-border-subtle:rgba(255,255,255,.07);
+  --color-border-default:rgba(255,255,255,.12);
+  /* gradients */
+  --gradient-signature:linear-gradient(245deg,#A3086A 26%,#009CC9 70%);
+  --gradient-soft:linear-gradient(245deg,rgba(163,8,106,.16) 26%,rgba(0,156,201,.10) 70%);
+  --gradient-text:linear-gradient(96deg,#A3086A 0%,#009CC9 100%);
+  --gradient-brand-135:linear-gradient(135deg,#A3086A 0%,#009CC9 100%);
+  /* fonts */
+  --font-display:Exo, sans-serif;
+  --font-body:'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-mono:'JetBrains Mono', ui-monospace, monospace;
+  /* radius */
+  --radius-input:8px;
+  --radius-tile:14px;
+  --radius-card:23px;     /* signature */
+  --radius-button:999px;
+  /* spacing */
+  --sp-xs:8px; --sp-sm:12px; --sp-md:16px; --sp-lg:24px; --sp-xl:32px;
+  --sp-2xl:48px; --sp-3xl:64px; --sp-4xl:80px; --sp-5xl:100px;
+  /* motion */
+  --dur-micro:120ms; --dur-base:220ms; --dur-slow:360ms; --dur-reveal:600ms;
+  --ease:cubic-bezier(.2,.7,.2,1);
+  /* shadows */
+  --shadow-card:0 1px 0 rgba(255,255,255,.04) inset, 0 20px 80px rgba(0,0,0,.40);
+  --shadow-panel:0 1px 0 rgba(255,255,255,.04) inset, 0 40px 80px -40px rgba(163,8,106,.40), 0 80px 160px -40px rgba(0,0,0,.60);
+  --shadow-btn:0 0 0 1px rgba(255,255,255,.04) inset, 0 8px 32px -8px rgba(163,8,106,.60);
+  --shadow-btn-hover:0 0 0 1px rgba(255,255,255,.04) inset, 0 12px 40px -8px rgba(163,8,106,.85);
+  /* layout */
+  --container:1246px;
+  --container-narrow:880px;
+  --pad:32px;
+  --sidebar:272px;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:32px}
+body{
+  margin:0;
+  background:var(--color-surface-base);
+  color:var(--color-text-primary);
+  font-family:var(--font-body);
+  font-size:16px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+@media (max-width:720px){:root{--pad:20px}}
+
+/* atmosphere: grid + glows */
+.bg-fx{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.bg-fx .grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(to right, rgba(255,255,255,.024) 1px, transparent 1px),
+    linear-gradient(rgba(255,255,255,.024) 1px, transparent 1px);
+  background-size:64px 64px;
+  mask-image:radial-gradient(120% 100% at 50% 0%, #000 30%, transparent 80%);
+}
+.bg-fx .orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.5}
+.bg-fx .orb--m{width:620px;height:620px;background:rgba(163,8,106,.35);top:-180px;left:-120px}
+.bg-fx .orb--c{width:560px;height:560px;background:rgba(0,156,201,.22);top:38%;right:-160px}
+.bg-fx .orb--m2{width:480px;height:480px;background:rgba(163,8,106,.16);bottom:-120px;left:30%}
+
+main{position:relative;z-index:1}
+.container{max-width:var(--container);margin-inline:auto;padding-inline:var(--pad)}
+.narrow{max-width:var(--container-narrow)}
+
+/* typography utilities mirror the DS text styles */
+.mono{font-family:var(--font-mono);font-size:11px;letter-spacing:.02em;text-transform:uppercase;color:var(--color-text-tertiary)}
+.eyebrow{font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--color-brand-primary-soft);display:inline-flex;align-items:center;gap:8px}
+.eyebrow::before{content:"";width:18px;height:1px;background:var(--color-brand-primary-soft);opacity:.7}
+.display{font-family:var(--font-display);font-weight:800;font-size:clamp(40px,7.5vw,90px);line-height:.94;letter-spacing:-.025em;text-transform:uppercase;margin:0}
+.h-section{font-family:var(--font-body);font-weight:600;font-size:clamp(28px,3.6vw,46px);line-height:1.1;letter-spacing:-.022em;margin:0}
+.h-exo{font-family:var(--font-display);font-weight:800;font-size:clamp(30px,4vw,52px);line-height:1.05;letter-spacing:-.03em;text-transform:uppercase;margin:0}
+.lede{font-size:clamp(17px,1.5vw,21px);line-height:1.55;color:var(--color-text-secondary);font-weight:400}
+.grad-text{background:var(--gradient-text);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* ---- SIDEBAR (always visible, left) ---- */
+.sidebar{position:fixed;top:0;left:0;bottom:0;width:var(--sidebar);z-index:50;
+  background:rgba(16,16,24,.72);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  border-right:1px solid var(--color-border-subtle);
+  display:flex;flex-direction:column;overflow-y:auto;overscroll-behavior:contain}
+.sidebar__brand{display:flex;align-items:center;gap:10px;padding:24px 22px 16px;
+  font-family:var(--font-display);font-weight:800;font-size:18px;text-transform:uppercase;letter-spacing:-.01em;
+  color:var(--color-text-primary);text-decoration:none;position:sticky;top:0;z-index:2;
+  background:linear-gradient(rgba(16,16,24,.92) 60%,rgba(16,16,24,0))}
+.sidebar__brand .hub{color:var(--color-brand-primary)}
+.sidebar__brand img{height:30px;width:auto;display:block}
+.sidebar__eyebrow{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--color-text-muted);padding:0 24px 12px}
+.sidebar__nav{display:flex;flex-direction:column;gap:2px;padding:4px 12px 12px}
+.snav{display:block;text-decoration:none;border-radius:12px;padding:9px 12px 10px;position:relative;
+  transition:background var(--dur-base) var(--ease)}
+.snav .row{display:flex;align-items:baseline;gap:9px}
+.snav .n{font-family:var(--font-mono);font-size:10px;color:var(--color-text-muted);letter-spacing:.04em;transition:color var(--dur-base) var(--ease)}
+.snav .t{font-family:var(--font-body);font-weight:600;font-size:14px;color:var(--color-text-secondary);transition:color var(--dur-base) var(--ease)}
+.snav .d{display:block;font-size:11px;color:var(--color-text-muted);margin-top:2px;padding-left:24px;line-height:1.35;transition:color var(--dur-base) var(--ease)}
+.snav::before{content:"";position:absolute;left:0;top:8px;bottom:8px;width:3px;border-radius:0 3px 3px 0;
+  background:var(--gradient-signature);opacity:0;transform:scaleY(.35);transform-origin:center;
+  transition:opacity var(--dur-base) var(--ease),transform var(--dur-base) var(--ease)}
+.snav:hover{background:rgba(255,255,255,.035)}
+.snav:hover .t{color:var(--color-text-primary)}
+.snav.active{background:rgba(163,8,106,.12)}
+.snav.active .t{color:var(--color-brand-primary-accessible)}
+.snav.active .n{color:var(--color-brand-primary-soft)}
+.snav.active .d{color:var(--color-text-tertiary)}
+.snav.active::before{opacity:1;transform:scaleY(1)}
+.sidebar__foot{margin-top:auto;padding:16px 22px 22px;border-top:1px solid var(--color-border-subtle);display:flex;flex-direction:column;gap:8px}
+.sidebar__foot .ver{font-family:var(--font-mono);font-size:10.5px;color:var(--color-text-tertiary);border:1px solid var(--color-border-subtle);padding:4px 9px;border-radius:999px;align-self:flex-start}
+.sidebar__foot .loc{font-family:var(--font-mono);font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--color-text-muted)}
+
+/* mobile top bar + drawer scaffolding */
+.topbar{display:none;position:fixed;top:0;left:0;right:0;z-index:55;align-items:center;
+  padding:11px var(--pad);background:rgba(10,10,15,.82);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--color-border-subtle)}
+.topbar__brand{display:flex;align-items:center;gap:9px;font-family:var(--font-display);font-weight:800;font-size:16px;
+  text-transform:uppercase;letter-spacing:-.01em;color:var(--color-text-primary);text-decoration:none}
+.topbar__brand .hub{color:var(--color-brand-primary)}
+.topbar__brand img{height:24px;width:auto;display:block}
+.burger{margin-left:auto;width:40px;height:40px;border-radius:10px;border:1px solid var(--color-border-default);
+  background:var(--color-surface-raised);display:grid;place-content:center;cursor:pointer}
+.burger svg{width:20px;height:20px;stroke:var(--color-text-primary);fill:none}
+.scrim{position:fixed;inset:0;z-index:49;background:rgba(8,8,14,.62);backdrop-filter:blur(4px);
+  opacity:0;pointer-events:none;transition:opacity var(--dur-slow) var(--ease)}
+.scrim.show{opacity:1;pointer-events:auto}
+
+/* layout offset for the fixed sidebar */
+main,footer{margin-left:var(--sidebar)}
+
+@media (max-width:960px){
+  .sidebar{width:284px;transform:translateX(-100%);transition:transform var(--dur-slow) var(--ease);background:rgba(16,16,24,.97)}
+  .sidebar.open{transform:none}
+  .topbar{display:flex}
+  main,footer{margin-left:0}
+  main{padding-top:58px}
+  html{scroll-padding-top:74px}
+}
+
+/* ---- HERO ---- */
+.hero{padding:100px 0 80px;position:relative}
+.hero__logo{max-width:420px;width:64%;min-width:260px;height:auto;margin-bottom:40px}
+.hero .display{margin-top:6px}
+.hero .lede{max-width:620px;margin:26px 0 0}
+.hero__meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:34px}
+.pill{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--color-text-secondary);
+  border:1px solid var(--color-border-subtle);background:var(--color-surface-raised);border-radius:999px;padding:8px 14px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--color-status-success);box-shadow:0 0 0 0 rgba(91,227,167,.5);animation:pulse 2.4s var(--ease) infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(91,227,167,.45)}70%{box-shadow:0 0 0 9px rgba(91,227,167,0)}100%{box-shadow:0 0 0 0 rgba(91,227,167,0)}}
+
+/* ---- SECTION SCAFFOLD ---- */
+section.sec{padding:clamp(72px,9vw,120px) 0;position:relative}
+.sec__head{max-width:760px;margin-bottom:56px}
+.sec__head .h-section{margin-top:14px}
+.sec__head .lede{margin-top:18px}
+.divider{height:1px;background:var(--color-border-subtle);border:0;margin:0}
+
+/* ---- generic card ---- */
+.card{background:var(--color-surface-raised);border:1px solid var(--color-border-subtle);border-radius:var(--radius-card);padding:32px;
+  transition:border-color var(--dur-slow) var(--ease), background var(--dur-slow) var(--ease), transform var(--dur-slow) var(--ease)}
+.card.hover-lift:hover{border-color:rgba(163,8,106,.40);background:var(--color-surface-overlay);transform:translateY(-3px)}
+.card--compact{padding:24px}
+
+.grid{display:grid;gap:16px}
+.g-3{grid-template-columns:repeat(3,1fr)}
+.g-2{grid-template-columns:repeat(2,1fr)}
+.g-4{grid-template-columns:repeat(4,1fr)}
+@media (max-width:900px){.g-3,.g-4{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:620px){.g-2,.g-3,.g-4{grid-template-columns:1fr}}
+
+/* principles */
+.principle .n{font-family:var(--font-display);font-weight:800;font-size:13px;color:var(--color-brand-primary-soft);letter-spacing:.08em}
+.principle h3{font-family:var(--font-display);font-weight:700;text-transform:uppercase;letter-spacing:-.01em;font-size:19px;margin:14px 0 10px}
+.principle p{color:var(--color-text-secondary);font-size:15px;margin:0}
+
+/* ---- COLOR ---- */
+.swatches{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+@media (max-width:900px){.swatches{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.swatches{grid-template-columns:repeat(2,1fr)}}
+.swatch{border-radius:var(--radius-tile);overflow:hidden;border:1px solid var(--color-border-subtle);cursor:pointer;background:var(--color-surface-raised);
+  transition:transform var(--dur-base) var(--ease),border-color var(--dur-base) var(--ease)}
+.swatch:hover{transform:translateY(-3px);border-color:var(--color-border-default)}
+.swatch .chip{height:84px}
+.swatch .meta{padding:12px 14px}
+.swatch .name{font-size:13px;font-weight:600}
+.swatch .val{font-family:var(--font-mono);font-size:11px;color:var(--color-text-tertiary);text-transform:uppercase;margin-top:3px}
+.swatch .use{font-size:12px;color:var(--color-text-tertiary);margin-top:7px;line-height:1.4}
+
+.gradients{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+@media (max-width:620px){.gradients{grid-template-columns:1fr}}
+.grad-card{border-radius:var(--radius-tile);overflow:hidden;border:1px solid var(--color-border-subtle);cursor:pointer}
+.grad-card .band{height:96px}
+.grad-card .meta{padding:13px 16px;background:var(--color-surface-raised)}
+.grad-card .name{font-weight:600;font-size:13px}
+.grad-card .val{font-family:var(--font-mono);font-size:10.5px;color:var(--color-text-tertiary);margin-top:4px;word-break:break-all}
+
+.rules{list-style:none;padding:0;margin:0;display:grid;gap:12px}
+.rules li{display:flex;gap:14px;align-items:flex-start;font-size:15px;color:var(--color-text-secondary)}
+.rules li b{color:var(--color-text-primary);font-weight:600}
+.rules .rx{flex:none;width:26px;height:26px;border-radius:8px;display:grid;place-items:center;font-family:var(--font-mono);font-size:11px;
+  background:var(--gradient-soft);border:1px solid rgba(163,8,106,.30);color:var(--color-brand-primary-accessible);font-weight:500}
+
+/* ---- LOGO: uso por fondo + descargas ---- */
+.logo-use{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media (max-width:820px){.logo-use{grid-template-columns:1fr}}
+.logo-use .case{border-radius:var(--radius-card);border:1px solid var(--color-border-subtle);overflow:hidden;background:var(--color-surface-raised)}
+.logo-use .stage{height:158px;display:grid;place-items:center;padding:24px}
+.logo-use .stage img{max-width:82%;max-height:60px;height:auto}
+.logo-use .stage--dark{background:var(--color-surface-base)}
+.logo-use .stage--light{background:#F6F5F1}
+.logo-use .stage--busy{background:linear-gradient(120deg,#009CC9 0%,#6A2EA0 48%,#A3086A 100%)}
+.logo-use .cap{padding:16px 18px;border-top:1px solid var(--color-border-subtle)}
+.logo-use .cap .k{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-brand-primary-soft)}
+.logo-use .cap h4{font-family:var(--font-body);font-weight:600;font-size:15px;margin:8px 0 5px}
+.logo-use .cap p{margin:0;font-size:12.5px;color:var(--color-text-tertiary);line-height:1.45}
+
+.dl-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+@media (max-width:1024px){.dl-grid{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:620px){.dl-grid{grid-template-columns:repeat(2,1fr)}}
+.dl{border-radius:var(--radius-tile);border:1px solid var(--color-border-subtle);background:var(--color-surface-raised);overflow:hidden;display:flex;flex-direction:column;
+  transition:border-color var(--dur-base) var(--ease),transform var(--dur-base) var(--ease)}
+.dl:hover{border-color:rgba(163,8,106,.4);transform:translateY(-3px)}
+.dl .prev{height:90px;display:grid;place-items:center;padding:14px;background:var(--color-surface-overlay)}
+.dl .prev--light{background:#F6F5F1}
+.dl .prev img{max-width:100%;max-height:54px}
+.dl .info{padding:12px 14px 4px;display:flex;flex-direction:column;gap:3px}
+.dl .info .nm{font-size:13px;font-weight:600}
+.dl .info .ds{font-family:var(--font-mono);font-size:9.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--color-text-tertiary)}
+.dl .btn-dl{display:flex;align-items:center;justify-content:center;gap:7px;margin:auto 12px 12px;padding:9px;border-radius:999px;
+  background:var(--color-brand-primary);color:#fff;text-decoration:none;font-size:12.5px;font-weight:600;transition:background var(--dur-base) var(--ease)}
+.dl .btn-dl:hover{background:linear-gradient(90deg,var(--color-brand-primary-soft),var(--color-brand-accent))}
+.dl .btn-dl svg{width:14px;height:14px;stroke:#fff;fill:none}
+
+/* ---- ACCESSIBILITY ---- */
+.skip{position:fixed;top:10px;left:10px;z-index:200;background:var(--color-brand-primary);color:#fff;
+  padding:10px 18px;border-radius:999px;font-weight:600;font-size:13px;text-decoration:none;
+  transform:translateY(-160%);transition:transform var(--dur-base) var(--ease)}
+.skip:focus{transform:none}
+:focus-visible{outline:2px solid var(--color-brand-primary-soft);outline-offset:3px;border-radius:6px}
+.a11y{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:900px){.a11y{grid-template-columns:1fr}}
+.a11y .chk{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;background:rgba(91,227,167,.12);color:var(--color-status-success);margin-bottom:16px}
+.a11y .chk svg{width:17px;height:17px;stroke:currentColor;fill:none}
+.a11y h4{font-family:var(--font-body);font-weight:600;font-size:16px;margin:0 0 8px}
+.a11y p{margin:0;font-size:13.5px;color:var(--color-text-secondary);line-height:1.5}
+.a11y code{font-family:var(--font-mono);font-size:12px;color:var(--color-brand-primary-accessible)}
+
+/* ---- IMAGEN / FOTO / VIDEO ---- */
+.guide-note{font-family:var(--font-mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--color-text-tertiary);
+  border:1px dashed var(--color-border-default);border-radius:var(--radius-tile);padding:12px 16px;margin-bottom:30px}
+.sub-h{font-family:var(--font-display);font-weight:700;text-transform:uppercase;letter-spacing:-.01em;font-size:21px;margin:52px 0 4px;display:flex;align-items:center;gap:12px}
+.sub-h .mono{color:var(--color-brand-primary-soft)}
+.sub-lede{font-size:15px;color:var(--color-text-secondary);max-width:780px;margin:0 0 22px;line-height:1.6}
+.fgrid{display:grid;gap:14px}
+.fg-2{grid-template-columns:repeat(2,1fr)} .fg-3{grid-template-columns:repeat(3,1fr)}
+@media(max-width:820px){.fg-3{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.fg-2,.fg-3{grid-template-columns:1fr}}
+
+.frame{position:relative;border-radius:var(--radius-card);overflow:hidden;border:1px solid var(--color-border-subtle);background:#06060a;aspect-ratio:16/9}
+.frame .scene{position:absolute;inset:0;background:
+  radial-gradient(120% 95% at 82% -18%, rgba(0,156,201,.32), transparent 55%),
+  radial-gradient(70% 60% at 6% 118%, rgba(163,8,106,.10), transparent 60%),
+  linear-gradient(180deg,#0e0e16 0%,#070709 100%)}
+.frame .scene--warm{background:
+  radial-gradient(120% 95% at 82% -18%, rgba(0,156,201,.30), transparent 55%),
+  radial-gradient(40% 50% at 24% 60%, rgba(230,162,77,.22), transparent 60%),
+  linear-gradient(180deg,#0e0e16 0%,#070709 100%)}
+.frame .scene--flat{background:#e7e7ea}
+.frame .art{position:absolute;inset:0;margin:auto;width:48%;height:48%;stroke:rgba(0,156,201,.6);fill:none;stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round}
+.frame .art--white{stroke:rgba(244,244,247,.55)}
+.frame img.photo,.mini img.photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;filter:brightness(.84) saturate(.78) contrast(1.03)}
+.frame img.photo.raw{filter:none}
+.frame .shade,.mini .shade{position:absolute;inset:0;z-index:1;pointer-events:none;background:
+  radial-gradient(135% 105% at 92% -14%,rgba(163,8,106,.26),transparent 76%),
+  radial-gradient(120% 100% at -8% 122%,rgba(0,156,201,.30),transparent 80%),
+  linear-gradient(180deg,rgba(16,6,18,.28),rgba(12,5,14,.72))}
+.frame img.photo.raw + .shade{display:none}
+.frame .grain{position:absolute;inset:0;opacity:.08;mix-blend-mode:screen;z-index:2;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.frame::before{content:"";position:absolute;left:0;right:0;bottom:0;height:46%;z-index:3;pointer-events:none;background:linear-gradient(transparent,rgba(0,0,0,.62))}
+.frame .cap{position:absolute;left:14px;bottom:12px;right:14px;font-family:var(--font-mono);font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:var(--color-text-primary);z-index:7;text-shadow:0 1px 5px rgba(0,0,0,.7)}
+.frame .tag{position:absolute;top:12px;left:12px;font-family:var(--font-mono);font-size:9px;text-transform:uppercase;letter-spacing:.1em;padding:3px 8px;border-radius:999px;z-index:7;display:inline-flex;align-items:center;gap:5px}
+.tag--do{color:var(--color-status-success);background:rgba(91,227,167,.14)}
+.tag--no{color:#ff8a8a;background:rgba(204,17,17,.18)}
+.frame .ovtext{position:absolute;left:7%;top:50%;transform:translateY(-50%);z-index:5}
+.frame .ovtext b{display:block;font-family:var(--font-display);font-weight:800;text-transform:uppercase;font-size:clamp(18px,3vw,30px);line-height:.95;letter-spacing:-.02em;color:#fff}
+.frame .ovtext span{font-family:var(--font-mono);font-size:9.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--color-brand-accent-soft)}
+.frame .guides{position:absolute;inset:0;z-index:4;pointer-events:none}
+.frame.cross::after{content:"";position:absolute;inset:0;z-index:6;background:
+  linear-gradient(45deg,transparent calc(50% - 2px),rgba(204,17,17,.92) calc(50% - 2px),rgba(204,17,17,.92) calc(50% + 2px),transparent calc(50% + 2px))}
+.frame.cross{filter:grayscale(.55)}
+.grade-after .scene{filter:brightness(.72) saturate(.55) contrast(1.08)}
+.grade-after .cyanwash{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(0,156,201,.12),rgba(10,10,15,.4));mix-blend-mode:screen}
+
+/* video / reel overlays */
+.lowerthird{position:absolute;left:0;right:0;bottom:0;padding:20px;background:linear-gradient(transparent,rgba(6,6,10,.9));z-index:5}
+.lowerthird .n{font-family:var(--font-display);font-weight:800;text-transform:uppercase;font-size:clamp(16px,2.4vw,24px);color:#fff;letter-spacing:-.01em;line-height:1}
+.lowerthird .r{font-family:var(--font-mono);font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--color-text-secondary);margin-top:7px}
+.reel{aspect-ratio:9/16;max-width:228px;margin-inline:auto}
+.hook{position:absolute;inset:0;display:grid;place-content:center;text-align:center;z-index:5;padding:16px}
+.hook .num{font-family:var(--font-display);font-weight:800;font-size:52px;color:var(--color-brand-accent);letter-spacing:-.04em;line-height:.88}
+.hook .lbl{font-family:var(--font-mono);font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--color-text-secondary);margin-top:10px}
+.subbar{position:absolute;left:12px;right:12px;bottom:16px;background:rgba(10,10,15,.8);border-radius:8px;padding:9px 12px;text-align:center;font-size:12.5px;color:var(--color-text-primary);z-index:6}
+
+/* metric blocks + chart */
+.metric-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:760px){.metric-row{grid-template-columns:1fr}}
+.metricblock{background:var(--color-surface-raised);border:1px solid var(--color-border-subtle);border-radius:var(--radius-card);padding:26px}
+.metricblock .v{font-family:var(--font-display);font-weight:800;font-size:clamp(34px,4.5vw,52px);letter-spacing:-.04em;line-height:1;color:var(--color-brand-accent)}
+.metricblock .v.cta{color:var(--color-brand-primary-soft)}
+.metricblock .l{font-family:var(--font-mono);font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--color-text-tertiary);margin-top:12px}
+.chartcard{background:var(--color-surface-raised);border:1px solid var(--color-border-subtle);border-radius:var(--radius-card);padding:24px}
+.chartcard .legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:14px;font-family:var(--font-mono);font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--color-text-tertiary)}
+.chartcard .legend i{display:inline-block;width:18px;height:3px;border-radius:2px;margin-right:7px;vertical-align:middle}
+
+/* ease/motion demo */
+.ease-demo .track{height:12px;background:rgba(255,255,255,.06);border-radius:999px;overflow:hidden;margin-top:6px}
+.ease-demo .fill{height:100%;width:80%;background:var(--gradient-signature);border-radius:999px;animation:growbar 2.8s var(--ease) infinite alternate}
+@keyframes growbar{0%{width:6%}55%{width:80%}100%{width:80%}}
+@media (prefers-reduced-motion:reduce){.ease-demo .fill{animation:none}}
+
+/* channel mini examples */
+.chan{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+@media(max-width:900px){.chan{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.chan{grid-template-columns:1fr}}
+.chan .card{padding:16px}
+.chan .mini{aspect-ratio:16/10;border-radius:14px;overflow:hidden;position:relative;border:1px solid var(--color-border-subtle);margin-bottom:12px}
+.chan h4{font-family:var(--font-body);font-weight:600;font-size:14px;margin:0 0 4px}
+.chan p{margin:0;font-size:12px;color:var(--color-text-tertiary);line-height:1.45}
+
+/* ---- TYPOGRAPHY ---- */
+.face{display:grid;grid-template-columns:200px 1fr;gap:28px;align-items:center}
+@media (max-width:720px){.face{grid-template-columns:1fr;gap:14px}}
+.face .big{font-size:84px;line-height:1}
+.face .role{margin:0}
+.face .role h3{margin:0 0 6px;font-size:20px;font-weight:600}
+.face .role p{margin:0;color:var(--color-text-secondary);font-size:14px}
+.face .role .w{font-family:var(--font-mono);font-size:11px;color:var(--color-text-tertiary);text-transform:uppercase;margin-top:10px}
+
+.type-table{width:100%;border-collapse:collapse;font-size:14px}
+.type-table th,.type-table td{text-align:left;padding:14px 12px;border-bottom:1px solid var(--color-border-subtle);vertical-align:middle}
+.type-table th{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-text-tertiary);font-weight:500}
+.type-table td.spec{color:var(--color-text-secondary);font-family:var(--font-mono);font-size:11.5px;white-space:nowrap}
+.type-table .demo{color:var(--color-text-primary)}
+.type-table tr:hover td{background:rgba(255,255,255,.02)}
+.tt-name{font-weight:600}
+
+/* ---- SPACING ---- */
+.spacing-row{display:flex;align-items:center;gap:18px;padding:9px 0;border-bottom:1px solid var(--color-border-subtle)}
+.spacing-row .label{width:120px;font-family:var(--font-mono);font-size:12px;color:var(--color-text-secondary);text-transform:uppercase}
+.spacing-row .bar{height:18px;background:var(--gradient-signature);border-radius:5px}
+.spacing-row .px{font-family:var(--font-mono);font-size:11px;color:var(--color-text-tertiary);margin-left:auto}
+
+/* ---- RADIUS ---- */
+.radius-demo{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+@media (max-width:620px){.radius-demo{grid-template-columns:repeat(2,1fr)}}
+.radius-demo .rd{aspect-ratio:1;background:var(--color-surface-overlay);border:1px solid var(--color-border-default);display:grid;place-content:center;text-align:center;gap:4px;position:relative}
+.radius-demo .rd .v{font-family:var(--font-display);font-weight:800;font-size:30px}
+.radius-demo .rd .t{font-family:var(--font-mono);font-size:10.5px;color:var(--color-text-tertiary);text-transform:uppercase}
+.radius-demo .rd.sig{background:var(--gradient-soft);border-color:rgba(163,8,106,.4)}
+.radius-demo .rd .star{position:absolute;top:10px;right:12px;color:var(--color-brand-primary-soft);font-size:13px}
+
+/* ---- MOTION ---- */
+.motion-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+@media (max-width:760px){.motion-grid{grid-template-columns:repeat(2,1fr)}}
+.motion-cell{padding:22px;text-align:center;cursor:pointer}
+.motion-cell .ball{width:30px;height:30px;border-radius:50%;background:var(--gradient-signature);margin:8px auto 18px;transition:transform var(--ease)}
+.motion-cell:hover .ball{transform:translateX(40px)}
+.motion-cell .d{font-family:var(--font-display);font-weight:800;font-size:26px}
+.motion-cell .l{font-family:var(--font-mono);font-size:10.5px;color:var(--color-text-tertiary);text-transform:uppercase;margin-top:4px}
+.ease-note{font-family:var(--font-mono);font-size:12px;color:var(--color-text-secondary);margin-top:18px}
+
+/* ---- COMPONENTS ---- */
+.btn{font-family:var(--font-body);font-weight:600;font-size:15px;letter-spacing:-.005em;border-radius:999px;border:1px solid transparent;cursor:pointer;
+  display:inline-flex;align-items:center;gap:10px;padding:14px 24px;transition:all var(--dur-base) var(--ease)}
+.btn--primary{background:var(--color-brand-primary);color:#fff;box-shadow:var(--shadow-btn)}
+.btn--primary:hover{background:linear-gradient(90deg,var(--color-brand-primary-soft),var(--color-brand-accent));box-shadow:var(--shadow-btn-hover)}
+.btn--primary:active{background:var(--color-brand-accent)}
+.btn--ghost{background:transparent;border-color:var(--color-brand-primary-soft);color:var(--color-text-primary)}
+.btn--ghost:hover{background:rgba(255,255,255,.06)}
+.btn--ghost:active{background:var(--color-brand-primary);border-color:var(--color-brand-primary)}
+.btn .arr{transition:transform var(--dur-base) var(--ease)}
+.btn:hover .arr{transform:translateX(4px)}
+
+.comp{display:grid;gap:14px}
+.comp__label{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-text-tertiary);margin-bottom:4px}
+.comp__demo{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+
+/* step card */
+.stepcard{position:relative;border-radius:var(--radius-card);background:var(--gradient-brand-135);padding:2px;min-height:200px;cursor:default;
+  transition:transform var(--dur-slow) var(--ease)}
+.stepcard:hover{transform:translateY(-3px)}
+.stepcard__inner{height:100%;min-height:196px;border-radius:21px;background:#fff;padding:24px;transition:background var(--dur-slow) var(--ease);display:flex;flex-direction:column;gap:12px}
+.stepcard:hover .stepcard__inner{background:transparent}
+.stepcard__num{width:34px;height:34px;border-radius:50%;background:#E9ECEF;display:grid;place-content:center;font-family:var(--font-display);font-weight:800;color:#101018;font-size:15px;transition:color var(--dur-slow) var(--ease)}
+.stepcard:hover .stepcard__num{color:#101018}
+.stepcard h4{font-family:var(--font-display);font-weight:700;text-transform:uppercase;font-size:18px;margin:0;color:#101018;transition:color var(--dur-slow) var(--ease)}
+.stepcard p{margin:0;font-size:13.5px;color:#5d5d6a;transition:color var(--dur-slow) var(--ease)}
+.stepcard:hover h4,.stepcard:hover p{color:#fff}
+
+/* input */
+.field{display:flex;flex-direction:column;gap:8px;max-width:320px}
+.field label{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--color-text-tertiary)}
+.field input{font-family:var(--font-body);font-size:14px;color:var(--color-text-primary);background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.10);border-radius:8px;padding:12px 14px;outline:none;transition:border-color var(--dur-base) var(--ease),box-shadow var(--dur-base) var(--ease)}
+.field input::placeholder{color:var(--color-text-muted)}
+.field input:focus{border-color:rgba(200,34,138,.55);box-shadow:0 0 0 3px rgba(200,34,138,.18)}
+.field.err input{border-color:var(--color-status-error);box-shadow:0 0 0 3px rgba(204,17,17,.18)}
+.field .hint{font-size:12px;color:var(--color-status-error)}
+
+/* badges */
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-body);font-weight:600;font-size:11px;padding:3px 10px;border-radius:999px}
+.badge--ok{color:var(--color-status-success);background:rgba(91,227,167,.10)}
+.badge--warn{color:var(--color-status-warning);background:rgba(230,162,77,.12)}
+.badge--info{color:var(--color-brand-accent);background:rgba(0,156,201,.12)}
+
+/* switch */
+.switch{width:46px;height:26px;border-radius:999px;background:rgba(255,255,255,.07);border:1px solid var(--color-border-subtle);position:relative;cursor:pointer;transition:background var(--dur-base) var(--ease)}
+.switch .thumb{position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.7);transition:transform var(--dur-base) var(--ease),background var(--dur-base) var(--ease)}
+.switch.on{background:rgba(91,227,167,.22);box-shadow:0 0 14px rgba(91,227,167,.25)}
+.switch.on .thumb{transform:translateX(20px);background:var(--color-status-success)}
+
+/* voice */
+.voice-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:760px){.voice-cols{grid-template-columns:1fr}}
+.voice-card h4{font-family:var(--font-display);text-transform:uppercase;font-weight:700;font-size:16px;margin:0 0 6px;letter-spacing:-.01em}
+.voice-card .tag{font-family:var(--font-mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px;display:inline-block}
+.tag--en{color:var(--color-brand-accent)} .tag--es{color:var(--color-brand-primary-soft)}
+.voice-quote{font-family:var(--font-display);font-weight:800;text-transform:uppercase;font-size:20px;line-height:1.1;letter-spacing:-.02em}
+.voice-quote .hl{color:var(--color-brand-primary-soft)}
+.voice-quote .cy{color:var(--color-brand-accent)}
+.voice-sub{font-size:14px;color:var(--color-text-secondary);margin-top:10px}
+.lex{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:6px}
+.lex .col{border-radius:var(--radius-tile);border:1px solid var(--color-border-subtle);padding:16px;background:var(--color-surface-raised)}
+.lex h5{margin:0 0 10px;font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+.lex .si{color:var(--color-status-success)} .lex .no{color:var(--color-status-error)}
+.lex ul{margin:0;padding-left:16px;font-size:13.5px;color:var(--color-text-secondary);line-height:1.7}
+
+/* governance */
+.gov-table{width:100%;border-collapse:collapse;font-size:13.5px}
+.gov-table th,.gov-table td{text-align:left;padding:12px 12px;border-bottom:1px solid var(--color-border-subtle);vertical-align:top}
+.gov-table th{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--color-text-tertiary);font-weight:500}
+.gov-table td{color:var(--color-text-secondary)}
+.sev{font-family:var(--font-mono);font-size:10px;text-transform:uppercase;padding:2px 8px;border-radius:999px}
+.sev--alta{color:#ff8a8a;background:rgba(204,17,17,.16)}
+.sev--media{color:var(--color-status-warning);background:rgba(230,162,77,.14)}
+.sev--baja{color:var(--color-text-tertiary);background:rgba(255,255,255,.05)}
+
+/* token files */
+.files{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media (max-width:760px){.files{grid-template-columns:1fr}}
+.file{display:flex;gap:12px;align-items:flex-start;padding:16px;border:1px solid var(--color-border-subtle);border-radius:var(--radius-tile);background:var(--color-surface-raised)}
+.file code{font-family:var(--font-mono);font-size:12.5px;color:var(--color-brand-primary-accessible)}
+.file p{margin:4px 0 0;font-size:13px;color:var(--color-text-tertiary)}
+
+/* footer */
+footer{border-top:1px solid var(--color-border-subtle);padding:60px 0 80px;margin-top:40px;position:relative;z-index:1}
+.foot{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap;align-items:flex-start}
+.foot__brand{font-family:var(--font-display);font-weight:800;font-size:24px;text-transform:uppercase;letter-spacing:-.01em}
+.foot__brand .hub{color:var(--color-brand-primary)}
+.foot p{color:var(--color-text-tertiary);font-size:13px;margin:8px 0 0}
+.foot a{color:var(--color-brand-primary-accessible);text-decoration:none;font-size:13px}
+.foot__legal{font-family:var(--font-mono);font-size:11px;color:var(--color-text-muted);text-transform:uppercase;margin-top:40px}
+
+/* back to top */
+.totop{position:fixed;right:24px;bottom:24px;width:52px;height:52px;border-radius:12px;background:var(--gradient-signature);border:0;cursor:pointer;z-index:60;
+  display:grid;place-content:center;box-shadow:0 4px 20px rgba(163,8,106,.35);opacity:0;pointer-events:none;transform:translateY(8px);
+  transition:opacity var(--dur-slow) var(--ease),transform var(--dur-slow) var(--ease),filter var(--dur-base) var(--ease)}
+.totop.show{opacity:1;pointer-events:auto;transform:none}
+.totop:hover{filter:brightness(1.12) translateY(-3px)}
+.totop svg{width:20px;height:20px}
+
+/* toast */
+.toast{position:fixed;left:50%;bottom:30px;transform:translate(-50%,20px);z-index:80;
+  background:var(--color-surface-elevated);border:1px solid var(--color-border-default);border-radius:999px;padding:10px 18px;
+  font-family:var(--font-mono);font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--color-text-primary);
+  opacity:0;pointer-events:none;transition:opacity var(--dur-base) var(--ease),transform var(--dur-base) var(--ease)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.toast b{color:var(--color-status-success)}
+
+/* reveal — only hidden when JS is present (progressive enhancement) */
+.reveal{transition:opacity var(--dur-reveal) var(--ease),transform var(--dur-reveal) var(--ease)}
+html.js .reveal{opacity:0;transform:translateY(16px)}
+html.js .reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  html.js .reveal,.reveal{opacity:1;transform:none;transition:none}
+  .dot{animation:none}.motion-cell:hover .ball{transform:none}
+  html{scroll-behavior:auto}
+}
+
+.callout{border-left:2px solid var(--color-brand-primary);background:var(--gradient-soft);border-radius:0 var(--radius-tile) var(--radius-tile) 0;padding:18px 22px;font-size:14.5px;color:var(--color-text-secondary)}
+.callout b{color:var(--color-text-primary)}
+.kfacts{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.kfact{border:1px solid var(--color-border-subtle);border-radius:var(--radius-tile);padding:14px 18px;background:var(--color-surface-raised);flex:1;min-width:150px}
+.kfact .v{font-family:var(--font-display);font-weight:800;font-size:24px}
+.kfact .l{font-family:var(--font-mono);font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--color-text-tertiary);margin-top:4px}
+</style>
+</head>
+
+<body>
+<a class="skip" href="#top">Saltar al contenido</a>
+<div class="bg-fx" aria-hidden="true">
+  <div class="grid"></div>
+  <div class="orb orb--m"></div>
+  <div class="orb orb--c"></div>
+  <div class="orb orb--m2"></div>
+</div>
+
+<aside class="sidebar" id="sidebar">
+  <a class="sidebar__brand" href="#top"><img src="logos/zenderhub-logo-negative-horizontal.svg" alt="ZenderHub" /></a>
+  <div class="sidebar__eyebrow">Sistema de marca · v1.0.0</div>
+  <nav class="sidebar__nav" id="navlinks" aria-label="Secciones del brandbook">
+    <a class="snav" href="#fundamentos"><span class="row"><span class="n">01</span><span class="t">Fundamentos</span></span><span class="d">3 principios + posicionamiento</span></a>
+    <a class="snav" href="#logo"><span class="row"><span class="n">02</span><span class="t">Logo</span></span><span class="d">Variantes y usos prohibidos</span></a>
+    <a class="snav" href="#color"><span class="row"><span class="n">03</span><span class="t">Color</span></span><span class="d">Paleta, gradientes, 5 reglas</span></a>
+    <a class="snav" href="#tipografia"><span class="row"><span class="n">04</span><span class="t">Tipografía</span></span><span class="d">3 familias + escala de texto</span></a>
+    <a class="snav" href="#espaciado"><span class="row"><span class="n">05</span><span class="t">Espaciado</span></span><span class="d">Escala 4px + layout</span></a>
+    <a class="snav" href="#radios"><span class="row"><span class="n">06</span><span class="t">Radios</span></span><span class="d">8 · 14 · 23 firma · 999</span></a>
+    <a class="snav" href="#movimiento"><span class="row"><span class="n">07</span><span class="t">Movimiento</span></span><span class="d">4 duraciones + easing</span></a>
+    <a class="snav" href="#componentes"><span class="row"><span class="n">08</span><span class="t">Componentes</span></span><span class="d">27 componentes en vivo</span></a>
+    <a class="snav" href="#voz"><span class="row"><span class="n">09</span><span class="t">Voz &amp; tono</span></span><span class="d">Bilingüe + léxico SÍ/NO</span></a>
+    <a class="snav" href="#imagen"><span class="row"><span class="n">10</span><span class="t">Imagen &amp; video</span></span><span class="d">Foto, datos, motion, canal</span></a>
+    <a class="snav" href="#accesibilidad"><span class="row"><span class="n">11</span><span class="t">Accesibilidad</span></span><span class="d">Contraste, foco, motion, ARIA</span></a>
+    <a class="snav" href="#tokens"><span class="row"><span class="n">12</span><span class="t">Tokens</span></span><span class="d">Gobernanza + roadmap</span></a>
+  </nav>
+  <div class="sidebar__foot">
+    <span class="ver">v1.0.0</span>
+    <span class="loc">Miami · Bogotá</span>
+  </div>
+</aside>
+
+<div class="scrim" id="scrim" aria-hidden="true"></div>
+
+<div class="topbar">
+  <a class="topbar__brand" href="#top"><img src="logos/zenderhub-logo-negative-horizontal.svg" alt="ZenderHub" /></a>
+  <button class="burger" id="burger" aria-label="Abrir menú de secciones" aria-expanded="false" aria-controls="sidebar">
+    <svg viewBox="0 0 24 24" stroke-width="2.2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+  </button>
+</div>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <img class="hero__logo reveal" src="logos/zenderhub-logo-negative-horizontal.svg" alt="ZenderHub" />
+
+      <div class="eyebrow reveal">ZenderHub · Sistema de marca</div>
+      <h1 class="display reveal">El sistema<br>de <span class="grad-text">marca.</span></h1>
+      <p class="lede reveal">Precisión técnica con carácter latino. Oscuro, cinético, con momentos de magenta que irrumpen sobre el negro como neón en un almacén. Este brandbook codifica esa tensión — y está construido sobre los mismos tokens que documenta.</p>
+      <div class="hero__meta reveal">
+        <span class="pill"><span class="dot"></span>Live · v1.0.0</span>
+        <span class="pill">Miami · Bogotá</span>
+        <span class="pill">Extraído de producción</span>
+        <span class="pill">Ecommerce Logistics</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FUNDAMENTOS -->
+  <section class="sec" id="fundamentos">
+    <div class="container">
+      <div class="sec__head reveal">
+        <div class="eyebrow">[ 01 ] Fundamentos</div>
+        <h2 class="h-section">Tres principios que sostienen todo lo demás.</h2>
+        <p class="lede">Inferidos del código de producción. Cuando una decisión de diseño esté en duda, vuelve a estos tres.</p>
+      </div>
+      <div class="grid g-3">
+        <div class="card hover-lift principle reveal">
+          <div class="n">01</div>
+          <h3>Dark luxury, not dark mode</h3>
+          <p>El fondo negro <code style="font-family:var(--font-mono);font-size:12px;color:var(--color-brand-primary-accessible)">#0A0A0F</code> no es una preferencia de usuario — es la identidad. La superficie clara (<code style="font-family:var(--font-mono);font-size:12px;color:var(--color-brand-primary-accessible)">body.svc-light</code>) es una excepción editorial para Servicios, no un modo paralelo.</p>
+        </div>
+        <div class="card hover-lift principle reveal">
+          <div class="n">02</div>
+          <h3>El radio 23px es la firma</h3>
+          <p>La curva ZenderHub vive en tarjetas, paneles, modales y formularios. Cuando algo usa 8px o 999px está comunicando una función distinta — input vs. botón. El radio no es decoración: es semántica.</p>
+        </div>
+        <div class="card hover-lift principle reveal">
+          <div class="n">03</div>
+          <h3>El movimiento tiene jerarquía</h3>
+          <p>120ms micro · 220ms estándar · 360ms contexto · 600ms revelación. Nunca se mezclan. El easing <code style="font-family:var(--font-mono);font-size:12px;color:var(--color-brand-primary-accessible)">cubic-bezier(.2,.7,.2,1)</code> está siempre presente: arranque limpio, frenada suave.</p>
+        </div>
+      </div>
+      <div class="callout reveal" style="margin-top:24px"><b>Posicionamiento.</b> ZenderHub es operador y consultor de logística ecommerce a la vez — la estrategia y las manos. La marca se define por oposición al consultor tradicional: prueba en dólares, no informes.</div>
+    </div>
+  </section>
+
+  <hr class="divider"/>
+
+  <!-- LOGO -->
+  <section class="sec" id="logo">
+    <div class="container">
+      <div class="sec__head reveal">
+        <div class="eyebrow">[ 02 ] Logo</div>
+        <h2 class="h-section">Un logo, tres versiones. El fondo manda.</h2>
+        <p class="lede">El símbolo de gradiente acompaña al wordmark, con "Hub" siempre destacado. Elige la versión según el fondo — y descárgala en SVG abajo.</p>
+      </div>
+
+      <div class="comp__label reveal">Cuándo usar cada versión</div>
+      <div class="logo-use reveal" style="margin:12px 0 40px">
+        <div class="case">
+          <div class="stage stage--dark"><img src="logos/zenderhub-logo-negative-horizontal.svg" alt="ZenderHub negativo sobre fondo oscuro"></div>
+          <div class="cap"><div class="k">Fondo oscuro</div><h4>Negativo — Zender blanco + Hub magenta</h4><p>La versión primaria. Sobre el negro de marca y superficies oscuras.</p></div>
+        </div>
+        <div class="case">
+          <div class="stage stage--busy"><img src="logos/zenderhub-logo-white-horizontal.svg" alt="ZenderHub blanco sobre fondo con color"></div>
+          <div class="cap"><div class="k">Fondo con color / baja visibilidad</div><h4>Blanco — una sola tinta</h4><p>Cuando el fondo tiene muchos colores o poco contraste, el logo 100% blanco asegura legibilidad.</p></div>
+        </div>
+        <div class="case">
+          <div class="stage stage--light"><img src="logos/zenderhub-logo-color-horizontal.svg" alt="ZenderHub a color sobre fondo claro"></div>
+          <div class="cap"><div class="k">Fondo blanco / claro</div><h4>Color — Zender cyan + Hub magenta</h4><p>Sobre blanco o superficies muy claras, la versión a color.</p></div>
+        </div>
+      </div>
+
+      <div class="comp__label reveal">Descargar logos · SVG</div>
+      <div class="dl-grid reveal" style="margin-top:12px">
+        <div class="dl">
+          <div class="prev"><img src="logos/zenderhub-logo-negative-horizontal.svg" alt=""></div>
+          <div class="info"><span class="nm">Horizontal · Negativo</span><span class="ds">Fondo oscuro</span></div>
+          <a class="btn-dl" href="logos/zenderhub-logo-negative-horizontal.svg" download><svg viewBox="0 0 24 24" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 21h16"/></svg>Descargar</a>
+        </div>
+        <div class="dl">
+          <div class="prev prev--light"><img src="logos/zenderhub-logo-color-horizontal.svg" alt=""></div>
+          <div class="info"><span class="nm">Horizontal · Color</span><span class="ds">Fondo claro</span></div>
+          <a class="btn-dl" href="logos/zenderhub-logo-color-horizontal.svg" download><svg viewBox="0 0 24 24" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 21h16"/></svg>Descargar</a>
+        </div>
+        <div class="dl">
+          <div class="prev" style="background:linear-gradient(120deg,#009CC9 0%,#6A2EA0 48%,#A3086A 100%)"><img src="logos/zenderhub-logo-white-horizontal.svg" alt=""></div>
+          <div class="info"><span class="nm">Horizontal · Blanco</span><span class="ds">Fondo con color</span></div>
+          <a class="btn-dl" href="logos/zenderhub-logo-white-horizontal.svg" download><svg viewBox="0 0 24 24" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 21h16"/></svg>Descargar</a>
+        </div>
+        <div class="dl">
+          <div class="prev"><img src="logos/zenderhub-favicon-color.svg" alt="" style="max-height:50px"></div>
+          <div class="info"><span class="nm">Favicon · Color</span><span class="ds">Símbolo</span></div>
+          <a class="btn-dl" href="logos/zenderhub-favicon-color.svg" download><svg viewBox="0 0 24 24" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 21h16"/></svg>Descargar</a>
+        </div>
+        <div class="dl">
+          <div class="prev" style="background:linear-gradient(120deg,#009CC9 0%,#6A2EA0 48%,#A3086A 100%)"><img src="logos/zenderhub-favicon-white.svg" alt="" style="max-height:50px"></div>
+          <div class="info"><span class="nm">Favicon · Blanco</span><span class="ds">Símbolo</span></div>
+          <a class="btn-dl" href="logos/zenderhub-favicon-white.svg" download><svg viewBox="0 0 24 24" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 21h16"/></svg>Descargar</a>
+        </div>
+      </div>
+
+      <div class="grid g-2" style="margin-top:24px">
+        <div class="card reveal">
+          <div class="comp__label">El símbolo solo</div>
+          <p style="font-size:14.5px;color:var(--color-text-secondary);margin:12px 0 0">El favicon (símbolo de gradiente) puede ir solo cuando el contexto ya identifica a la marca: avatar, app icon, sello, pestaña del navegador. Conserva siempre el gradiente magenta→cyan; no lo rellenes de un color plano salvo en la versión blanca.</p>
+        </div>
+        <div class="card reveal">
+          <div class="comp__label">Usos · qué nunca hacer</div>
+          <ul class="rules" style="margin-top:12px">
+            <li><span class="rx" style="color:#ff8a8a;background:rgba(204,17,17,.14);border-color:rgba(204,17,17,.3)">✕</span><span>No usar la versión a color sobre fondo oscuro (usa negativo o blanco).</span></li>
+            <li><span class="rx" style="color:#ff8a8a;background:rgba(204,17,17,.14);border-color:rgba(204,17,17,.3)">✕</span><span>No recolorear "Hub" fuera del magenta de marca.</span></li>
+            <li><span class="rx" style="color:#ff8a8a;background:rgba(204,17,17,.14);border-color:rgba(204,17,17,.3)">✕</span><span>No estirar, rotar ni añadir sombra al logo.</span></li>
+            <li><span class="rx" style="color:#ff8a8a;background:rgba(204,17,17,.14);border-color:rgba(204,17,17,.3)">✕</span><span>No colocarlo sobre fondo magenta pleno (bajo contraste).</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider"/>
+
+  <!-- COLOR -->
+  <section class="sec" id="color">
+    <div class="container">
+      <div class="sec__head reveal">
+        <div class="eyebrow">[ 03 ] Color</div>
+        <h2 class="h-section">Magenta es acción. Cyan es dato. El negro es la casa.</h2>
+        <p class="lede">Click en cualquier muestra para copiar su valor. Todos los tokens semánticos referencian un primitivo — nunca un hex crudo en componentes.</p>
+      </div>
+
+      <div class="comp__label reveal">Marca</div>
+      <div class="swatches reveal" style="margin:12px 0 36px" data-copy-group>
+        <div class="swatch" data-copy="#A3086A"><div class="chip" style="background:#A3086A"></div><div class="meta"><div class="name">brand / primary</div><div class="val">#A3086A</div><div class="use">CTAs, estados activos, identidad</div></div></div>
+        <div class="swatch" data-copy="#C8228A"><div class="chip" style="background:#C8228A"></div><div class="meta"><div class="name">brand / primarySoft</div><div class="val">#C8228A</div><div class="use">Hover, eyebrows, énfasis</div></div></div>
+        <div class="swatch" data-copy="#D44FA0"><div class="chip" style="background:#D44FA0"></div><div class="meta"><div class="name">brand / accessible</div><div class="val">#D44FA0</div><div class="use">Links sobre oscuro · WCAG AA</div></div></div>
+        <div class="swatch" data-copy="#6F0548"><div class="chip" style="background:#6F0548"></div><div class="meta"><div class="name">brand / primaryDeep</div><div class="val">#6F0548</div><div class="use">Pressed, fondo de footer</div></div></div>
+        <div class="swatch" data-copy="#009CC9"><div class="chip" style="background:#009CC9"></div><div class="meta"><div class="name">brand / accent</div><div class="val">#009CC9</div><div class="use">Datos, métricas, step 2 del gradiente</div></div></div>
+        <div class="swatch" data-copy="#2BB8E0"><div class="chip" style="background:#2BB8E0"></div><div class="meta"><div class="name">brand / accentSoft</div><div class="val">#2BB8E0</div><div class="use">Hover accent, variante clara</div></div></div>
+      </div>
+
+      <div class="comp__label reveal">Superficies (dark)</div>
+      <div class="swatches reveal" style="margin:12px 0 36px">
+        <div class="swatch" data-copy="#0A0A0F"><div class="chip" style="background:#0A0A0F;border-bottom:1px solid var(--color-border-subtle)"></div><div class="meta"><div class="name">surface / base</div><div class="val">#0A0A0F</div><div class="use">Canvas de página</div></div></div>
+        <div class="swatch" data-copy="#101018"><div class="chip" style="background:#101018"></div><div class="meta"><div class="name">surface / raised</div><div class="val">#101018</div><div class="use">Cards, panels, nav</div></div></div>
+        <div class="swatch" data-copy="#15151F"><div class="chip" style="background:#15151F"></div><div class="meta"><div class="name">surface / overlay</div><div class="val">#15151F</div><div class="use">Hover de raised</div></div></div>
+        <div class="swatch" data-copy="#1B1B27"><div class="chip" style="background:#1B1B27"></div><div class="meta"><div class="name">surface / elevated</div><div class="val">#1B1B27</div><div class="use">Tope de la jerarquía</div></div></div>
+      </div>
+
+      <div class="comp__label reveal">Texto</div>
+      <div class="swatches reveal" style="margin:12px 0 36px">
+        <div class="swatch" data-copy="#F4F4F7"><div class="chip" style="background:#F4F4F7"></div><div class="meta"><div class="name">text / primary</div><div class="val">#F4F4F7</div><div class="use">Títulos, body principal</div></div></div>
+        <div class="swatch" data-copy="#B4B4C0"><div class="chip" style="background:#B4B4C0"></div><div class="meta"><div class="name">text / secondary</div><div class="val">#B4B4C0</div><div class="use">Lede, descripciones</div></div></div>
+        <div class="swatch" data-copy="#7E7E8E"><div class="chip" style="background:#7E7E8E"></div><div class="meta"><div class="name">text / tertiary</div><div class="val">#7E7E8E</div><div class="use">Metadata, captions</div></div></div>
+        <div class="swatch" data-copy="#6A6A7A"><div class="chip" style="background:#6A6A7A"></div><div class="meta"><div class="name">text / muted</div><div class="val">#6A6A7A</div><div class="use">Disabled, placeholder</div></div></div>
+      </div>
+
+      <div class="comp__label reveal">Status</div>
+      <div class="swatches reveal" style="margin:12px 0 36px">
+        <div class="swatch" data-copy="#5BE3A7"><div class="chip" style="background:#5BE3A7"></div><div class="meta"><div class="name">status / success</div><div class="val">#5BE3A7</div><div class="use">OK, switch ON, checks</div></div></div>
+        <div class="swatch" data-copy="#E6A24D"><div class="chip" style="background:#E6A24D"></div><div class="meta"><div class="name">status / warning</div><div class="val">#E6A24D</div><div class="use">Out-of-stock, pendiente</div></div></div>
+        <div class="swatch" data-copy="#CC1111"><div class="chip" style="background:#CC1111"></div><div class="meta"><div class="name">status / error</div><div class="val">#CC1111</div><div class="use">Validación de formularios</div></div></div>
+        <div class="swatch" data-copy="#009CC9"><div class="chip" style="background:#009CC9"></div><div class="meta"><div class="name">status / info</div><div class="val">#009CC9</div><div class="use">Badges informativos</div></div></div>
+      </div>
+
+      <div class="comp__label reveal">Gradientes</div>
+      <div class="gradients reveal" style="margin:12px 0 36px">
+        <div class="grad-card" data-copy="linear-gradient(245deg,#A3086A 26%,#009CC9 70%)"><div class="band" style="background:var(--gradient-signature)"></div><div class="meta"><div class="name">gradient / signature</div><div class="val">linear-gradient(245deg, #A3086A 26%, #009CC9 70%)</div></div></div>
+        <div class="grad-card" data-copy="linear-gradient(135deg,#A3086A 0%,#009CC9 100%)"><div class="band" style="background:var(--gradient-brand-135)"></div><div class="meta"><div class="name">gradient / brand135</div><div class="val">linear-gradient(135deg, #A3086A, #009CC9) · StepCard hover</div></div></div>
+        <div class="grad-card" data-copy="linear-gradient(96deg,#A3086A 0%,#009CC9 100%)"><div class="band" style="background:var(--gradient-text)"></div><div class="meta"><div class="name">gradient / text</div><div class="val">linear-gradient(96deg, #A3086A, #009CC9) · marca, sin blanco</div></div></div>
+        <div class="grad-card" data-copy="linear-gradient(245deg,rgba(163,8,106,.16) 26%,rgba(0,156,201,.10) 70%)"><div class="band" style="background:var(--color-surface-raised)"><div style="height:100%;background:var(--gradient-soft)"></div></div><div class="meta"><div class="name">gradient / soft</div><div class="val">signature transparente · overlays sutiles</div></div></div>
+      </div>
+
+      <div class="card reveal" style="background:var(--color-surface-raised)">
+        <div class="comp__label">Reglas de color</div>
+        <ul class="rules" style="margin-top:16px">
+          <li><span class="rx">1</span><span>Nunca usar <b>magenta como fondo de sección</b>. El magenta es reserva para interactivos, bordes activos y énfasis.</span></li>
+          <li><span class="rx">2</span><span>El <b>gradiente signature</b> tiene uso limitado: bordes de StepCard, barra lateral en hover, back-to-top, progress bars, orbe CTA. No en fondos de sección completos.</span></li>
+          <li><span class="rx">3</span><span><b>Cyan es acento, no primario.</b> Datos y métricas en cyan; acciones y CTAs en magenta. Cuando aparecen juntos, magenta va primero.</span></li>
+          <li><span class="rx">4</span><span>Error de formulario = <b>#CC1111</b>, no #FF5A6E. El sistema normaliza a un único valor de error.</span></li>
+          <li><span class="rx">5</span><span>La superficie clara <b>#F6F5F1</b> es exclusiva de <code style="font-family:var(--font-mono);font-size:12px;color:var(--color-brand-primary-accessible)">body.svc-light</code>. No crear superficies grises/cálidas en secciones dark.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider"/>
+
+  <!-- TIPOGRAFIA -->
+  <section class="sec" id="tipografia">
+    <div class="container">
+      <div class="sec__head reveal">
+        <div class="eyebrow">[ 04 ] Tipografía</div>
+        <h2 class="h-section">Tres voces tipográficas, roles que no se cruzan.</h2>
+        <p class="lede">Exo grita en display. Jakarta explica en cuerpo. Mono da credibilidad técnica. Cada una en su carril.</p>
+      </div>
+
+      <div class="grid" style="gap:16px">
+        <div class="card reveal face">
+          <div class="big" style="font-family:var(--font-display);font-weight:800;text-transform:uppercase">Aa</div>
+          <div class="role"><h3>Exo</h3><p>Display, títulos, botones nav, drawer, tags. <b style="color:var(--color-text-primary)">Siempre UPPERCASE en producto.</b> Nunca en body o labels de formulario. El line-height 0.94 del hero es intencional.</p><div class="w">Pesos en uso · 700 Bold · 800 ExtraBold</div></div>
+        </div>
+        <div class="card reveal face">
+          <div class="big" style="font-family:var(--font-body);font-weight:600">Aa</div>
+          <div class="role"><h3>Plus Jakarta Sans</h3><p>El tronco. Todo lo que no es titular o etiqueta técnica. Subtítulos de sección en sentence case con tracking negativo (−0.022em).</p><div class="w">Pesos en uso · 400 · 500 · 600</div></div>
+        </div>
+        <div class="card reveal face">
+          <div class="big" style="font-family:var(--font-mono);font-weight:500">Aa</div>
+          <div class="role"><h3>JetBrains Mono</h3><p>Lo técnico: badges de estado, aperturas de sección <code style="font-family:var(--font-mono);font-size:13px;color:var(--color-brand-primary-accessible)">[ ... ]</code>, labels de formulario. Nunca en párrafos.</p><div class="w">Pesos en uso · 400 · 500</div></div>
+        </div>
+      </div>
+
+      <div class="card reveal" style="margin-top:24px;overflow-x:auto">
+        <div class="comp__label" style="margin-bottom:6px">Escala de texto · medidas de producción</div>
+        <table class="type-table">
+          <thead><tr><th>Estilo</th><th>Familia</th><th>Specs</th><th>Muestra</th></tr></thead>
+          <tbody>
+            <tr><td class="tt-name">display</td><td class="spec">Exo 800</td><td class="spec">clamp(56–90) · lh .94 · -.025em · UPPER</td><td class="demo" style="font-family:var(--font-display);font-weight:800;font-size:30px;text-transform:uppercase;letter-spacing:-.025em">Fulfillment</td></tr>
+            <tr><td class="tt-name">headingLg</td><td class="spec">Exo 800</td><td class="spec">clamp(36–60) · UPPER</td><td class="demo" style="font-family:var(--font-display);font-weight:800;font-size:24px;text-transform:uppercase;letter-spacing:-.03em">Servicios</td></tr>
+            <tr><td class="tt-name">heading</td><td class="spec">Jakarta 600</td><td class="spec">clamp(30–50) · -.022em</td><td class="demo" style="font-family:var(--font-body);font-weight:600;font-size:24px;letter-spacing:-.022em">Una sola pieza</td></tr>
+            <tr><td class="tt-name">cardTitle</td><td class="spec">Exo 700</td><td class="spec">clamp(18–22) · -.02em</td><td class="demo" style="font-family:var(--font-display);font-weight:700;font-size:18px;letter-spacing:-.02em">DTC Fulfillment</td></tr>
+            <tr><td class="tt-name">sectionTitle</td><td class="spec">Jakarta 600</td><td class="spec">20px · -.02em</td><td class="demo" style="font-family:var(--font-body);font-weight:600;font-size:18px">Cómo funciona</td></tr>
+            <tr><td class="tt-name">lede</td><td class="spec">Jakarta 400</td><td class="spec">clamp(17–21) · lh 1.5</td><td class="demo" style="font-size:16px;color:var(--color-text-secondary)">Recupera margen en tu P&amp;L.</td></tr>
+            <tr><td class="tt-name">body</td><td class="spec">Jakarta 400</td><td class="spec">16px · lh 1.55</td><td class="demo" style="font-size:15px;color:var(--color-text-secondary)">Texto base de párrafo.</td></tr>
+            <tr><td class="tt-name">stat / statXl</td><td class="spec">Exo 800</td><td class="spec">clamp(32–48) / (42–64) · -.04em</td><td class="demo" style="font-family:var(--font-display);font-weight:800;font-size:30px;letter-spacing:-.04em;color:var(--color-brand-accent)">$6.4M</td></tr>
+            <tr><td class="tt-name">label</td><td class="spec">Exo 700</td><td class="spec">11px · .08em · UPPER</td><td class="demo" style="font-family:var(--font-display);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.08em">Eyebrow</td></tr>
+            <tr><td class="tt-name">labelForm</td><td class="spec">Mono 600</td><td class="spec">10.5px · .12em · UPPER</td><td class="demo" style="font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--color-text-tertiary)">Empresa</td></tr>
+            <tr><td class="tt-name">mono</td><td class="spec">Mono 400</td><td class="spec">11px · .02em · UPPER</td><td class="demo" style="font-family:var(--font-mono);font-size:11px;text-transform:uppercase;color:var(--color-text-tertiary)">[ Diagnóstico ]</td></tr>
+            <tr><td class="tt-name">quote</td><td class="spec">Jakarta 400 italic</td><td class="spec">17 / 24px · italic</td><td class="demo" style="font-style:italic;font-size:15px;color:var(--color-text-secondary)">"No necesitábamos otro audit."</td></tr>
+            <tr><td class="tt-name">drawerNav</td><td class="spec">Exo 800</td><td class="spec">32px · UPPER</td><td class="demo" style="font-family:var(--font-display);font-weight:800;font-size:20px;text-transform:uppercase">Contacto</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card reveal" style="margin-top:24px">
+        <div class="comp__label">Reglas de tipografía</div>
+        <ul class="rules" style="margin-top:16px">
+          <li><span class="rx">1</span><span><b>Exo siempre UPPERCASE</b> en producto. Solo títulos, CTAs grandes y drawer.</span></li>
+          <li><span class="rx">2</span><span><b>Jakarta es el tronco.</b> Pesos dominantes 400 (body) y 600 (subtítulos).</span></li>
+          <li><span class="rx">3</span><span><b>Mono solo para lo técnico.</b> Badges, aperturas <code style="font-family:var(--font-mono);font-size:12px;color:var(--color-brand-primary-accessible)">[ ]</code>, labels de form. Nunca en párrafos.</span></li>
+          <li><span class="rx">4</span><span>El <b>line-height 0.94</b> del display es intencional — densidad en hero. No corregir.</span></li>
+          <li><span class="rx">5</span><span><b>Tracking negativo</b> (−0.022 a −0.03em) en headings Jakarta: equilibra la apertura del Exo.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider"/>
+
+  <!-- ESPACIADO -->
+  <section class="sec" id="espaciado">
+    <div class="container narrow">
+      <div class="sec__head reveal">
+        <div class="eyebrow">[ 05 ] Espaciado &amp; layout</div>
+        <h2 class="h-section">Escala de 4px. Ritmo respirado.</h2>
+        <p class="lede">Múltiplos de 4. Padding de sección fluido. Container de 1246px.</p>
+      </div>
+      <div class="card reveal">
+        <div class="comp__label" style="margin-bottom:10px">Escala de spacing</div>
+        <div class="spacing-row"><span class="label">xs</span><span class="bar" style="width:8px"></span><span class="px">8px</span></div>
+        <div class="spacing-row"><span class="label">sm</span><span class="bar" style="width:12px"></span><span class="px">12px</span></div>
+        <div class="spacing-row"><span class="label">md</span><span class="bar" style="width:16px"></span><span class="px">16px</span></div>
+        <div class="spacing-row"><span class="label">lg</span><span class="bar" style="width:24px"></span><span class="px">24px</span></div>
+        <div class="spacing-row"><span class="label">xl</span><span class="bar" style="width:32px"></span><span class="px">32px</span></div>
+        <div class="spacing-row"><span class="label">2xl</span><span class="bar" style="width:48px"></span><span class="px">48px</span></div>
+        <div class="spacing-row"><span class="label">3xl</span><span class="bar" style="width:64px"></span><span class="px">64px</span></div>
+        <div class="spacing-row"><span class="label">4xl</span><span class="bar" style="width:80px"></span><span class="px">80px</span></div>
+        <div class="spacing-row" style="border:0"><span class="label">5xl</span><span class="bar" style="width:100px"></span><span class="px">100px</span></div>
+      </div>
+      <div class="kfacts reveal">
+        <div class="kfact"><div class="v">1246px</div><div class="l">container max</div></div>
+        <div class="kfact"><div class="v">880px</div><div class="l">container narrow</div></div>
+        <div class="kfact"><div class="v">32→20px</div><div class="l">padding (desktop→móvil)</div></div>
+        <div class="kfact"><div class="v">clamp(72,9vw,128)</div><div class="l">padding-y de sección</div></div>
+      </div>
+      <div class="callout reveal" style="margin-top:18px">Los grids de cards usan <b>16px</b> de gap. Los grids de stats usan <b>1px</b> — efecto de tabla con la línea de borde como separador visible.</div>
+    </div>
+  </section>
+
+  <hr class="divider"/>
+
+  <!-- RADIOS -->
+  <section class="sec" id="radios">
+    <div class="container">
+      <div class="sec__head reveal">
+        <div class="eyebrow">[ 06 ] Radios</div>
+        <h2 class="h-section">El radio comunica función.</h2>
+        <p class="lede">23px es la firma. Cualquier otro radio dice "soy otra cosa".</p>
+      </div>
+      <div class="radius-demo reveal">
+        <div class="rd" style="border-radius:8px"><span class="v">8</span><span class="t">input · s</span></div>
+        <div class="rd" style="border-radius:14px"><span class="v">14</span><span class="t">tile · m</span></div>
+        <div class="rd sig" style="border-radius:23px"><span class="star">★</span><span class="v">23</span><span class="t">signature · l</span></div>
+        <div class="rd" style="border-radius:999px"><span class="v">∞</span><span class="t">button · full</span></div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider"/>
+
+  <!-- MOVIMIENTO -->
+  <section class="sec" id="movimiento">
+    <div class="container">
+      <div class="sec__head reveal">
+        <div class="eyebrow">[ 07 ] Movimiento</div>
+        <h2 class="h-section">Cuatro duraciones. Un solo easing.</h2>
+        <p class="lede">Pasa el cursor sobre cada celda para ver el ritmo. Todas comparten <code style="font-family:var(--font-mono);font-size:13px;color:var(--color-brand-primary-accessible)">cubic-bezier(.2,.7,.2,1)</code>.</p>
+      </div>
+      <div class="motion-grid reveal">
+        <div class="card motion-cell" style="--ease:cubic-bezier(.2,.7,.2,1)"><div class="ball" style="transition-duration:120ms"></div><div class="d">120<span style="font-size:13px">ms</span></div><div class="l">micro · hover</div></div>
+        <div class="card motion-cell"><div class="ball" style="transition-duration:220ms"></div><div class="d">220<span style="font-size:13px">ms</span></div><div class="l">base · botón/input</div></div>
+        <div class="card motion-cell"><div class="ball" style="transition-duration:360ms"></div><div class="d">360<span style="font-size:13px">ms</span></div><div class="l">slow · contexto/nav</div></div>
+        <div class="card motion-cell"><div class="ball" style="transition-duration:600ms"></div><div class="d">600<span style="font-size:13px">ms</span></div><div class="l">reveal · página</div></div>
+      </div>
+      <div class="ease-note reveal">ease = cubic-bezier(.2, .7, .2, 1) · arranque limpio, frenada suave · sin bounces · hover solo color, no scale (excepto micro-lift de cards).</div>
+    </div>
+  </section>
+
+  <hr class="divider"/>
+
+  <!-- COMPONENTES -->
+  <section class="sec" id="componentes">
+    <div class="container">
+      <div class="sec__head reveal">
+        <div class="eyebrow">[ 08 ] Componentes</div>
+        <h2 class="h-section">Render en vivo. Interactúa con ellos.</h2>
+        <p class="lede">Cada componente usa los tokens de arriba. Pasa el cursor, haz click, enfoca los campos.</p>
+      </div>
+
+      <div class="grid g-2" style="gap:16px">
+        <div class="card reveal comp">
+          <div class="comp__label">Button — primary / ghost</div>
+          <div class="comp__demo">
+            <button class="btn btn--primary">Cotiza gratis <span class="arr">→</span></button>
+            <button class="btn btn--ghost">Saber más</button>
+          </div>
+          <p style="font-size:13px;color:var(--color-text-tertiary);margin:4px 0 0">Hover: primary → gradiente. Active: snap a cyan. Radius 999px.</p>
+        </div>
+
+        <div class="card reveal comp">
+          <div class="comp__label">Badge — estado</div>
+          <div class="comp__demo">
+            <span class="badge badge--ok"><span style="width:6px;height:6px;border-radius:50%;background:currentColor;display:inline-block"></span>En bodega</span>
+            <span class="badge badge--warn">Pendiente</span>
+            <span class="badge badge--info">RFID</span>
+          </div>
+          <div class="comp__demo" style="margin-top:14px">
+            <div class="comp__label" style="margin:0 14px 0 0">Switch</div>
+            <div class="switch" id="sw" role="switch" aria-checked="false" tabindex="0"><span class="thumb"></span></div>
+            <span class="mono" id="swlabel">off</span>
+            <span style="margin-left:20px;display:inline-flex;align-items:center;gap:8px"><span class="dot"></span><span class="mono">status dot</span></span>
+          </div>
+        </div>
+
+        <div class="card reveal comp">
+          <div class="comp__label">Input — default / focus / error</div>
+          <div style="display:flex;gap:20px;flex-wrap:wrap">
+            <div class="field"><label>Empresa</label><input type="text" placeholder="Tu marca ecommerce"/></div>
+            <div class="field err"><label>Email</label><input type="email" value="no-es-un-email" /><span class="hint">Ingresa un correo válido.</span></div>
+          </div>
+          <p style="font-size:13px;color:var(--color-text-tertiary);margin:4px 0 0">Radius 8px. Focus magenta-soft + ring. Error #CC1111.</p>
+        </div>
+
+        <div class="reveal" style="display:grid;gap:8px">
+          <div class="comp__label">StepCard — hover revela el gradiente</div>
+          <div class="stepcard">
+            <div class="stepcard__inner">
+              <div class="stepcard__num">01</div>
+              <h4>Recibimos</h4>
+              <p>RFID en bodega. Cada unidad trazada desde el minuto cero.</p>
+            </div>
+          </div>
+          <p style="font-size:13px;color:var(--color-text-tertiary);margin:4px 0 0">Borde gradiente 2px · interior blanco → transparente en hover · radius 23px.</p>
+        </div>
+      </div>
+
+      <div class="card reveal" style="margin-top:16px">
+        <div class="comp__label">Section header — patrón reutilizable</div>
+        <div style="margin-top:14px">
+          <div class="eyebrow">[ Ejemplo ] Eyebrow mono</div>
+          <h3 class="h-section" style="font-size:30px;margin-top:12px">Título de sección en Jakarta 600</h3>
+          <p class="lede" style="margin-top:10px;max-width:620px">Lede en bodyLg, color secundario. Eyebrow en magenta-soft, título en heading, lede debajo. Es el ritmo de apertura de toda sección.</p>
+        </div>
+      </div>
+
+      <div class="callout reveal" style="margin-top:18px">Inventario completo en <b>COMPONENTS.md</b>: Button, Card, StepCard, Input, Icon, SectionHeader, TrustBadge, Header/Nav, Footer, Drawer, Hero, TrustBar, StatBand, Problem (scroll horizontal), ServicesGrid, HowItWorks, DiagnosticForm, Proof, CallCTA, ValueProps, CarrierShelf, BookingModal, FloatCTA, BackToTop, Switch, Badge, Dot. <b>27 componentes</b> documentados con variantes y estados.</div>
+    </div>
+  </section>
+
+  <hr class="divider"/>
+
+  <!-- VOZ -->
+  <section class="sec" id="voz">
+    <div class="container">
+      <div class="sec__head reveal">
+        <div class="eyebrow">[ 09 ] Voz &amp; tono</div>
+        <h2 class="h-section">Dos registros. Bilingüe según la pieza.</h2>
+        <p class="lede">Inglés para web y mercado US. Español colombiano (tuteo) para piezas LatAm. Si no sabes el mercado, pregúntalo antes de redactar.</p>
+      </div>
+
+      <div class="grid g-2" style="gap:16px;margin-bottom:24px">
+        <div class="card reveal voice-card">
+          <span class="tag tag--en">Inglés · web / US</span>
+          <div class="voice-quote">Your shipping ops <span class="hl">are bleeding</span> real money. <span class="cy">We fix it.</span></div>
+          <p class="voice-sub">Confrontacional, anclado a dólares, sin fluff. Grito en Exo all-caps + explicación serena en Jakarta. B2B, marcas de $5M–$50M.</p>
+        </div>
+        <div class="card reveal voice-card">
+          <span class="tag tag--es">Español colombiano · LatAm</span>
+          <div class="voice-quote">Fulfillment <span class="hl">sin límites.</span> <span class="cy">Cotiza gratis.</span></div>
+          <p class="voice-sub">Tuteo, directo, cercano. Misma estructura de dos voces. CTAs: Cotiza gratis · Cotizar · Saber más · Contactar.</p>
+        </div>
+      </div>
+
+      <div class="card reveal" style="margin-bottom:16px">
+        <div class="comp__label">El sistema de dos voces</div>
+        <div class="grid g-2" style="margin-top:14px;gap:24px">
+          <div><div class="mono" style="color:var(--color-brand-primary-soft)">Acusación · Exo UPPERCASE</div><p style="margin:8px 0 0;font-family:var(--font-display);font-weight:800;text-transform:uppercase;font-size:18px;letter-spacing:-.02em">You're overpaying your carriers.</p></div>
+          <div><div class="mono" style="color:var(--color-brand-accent)">Explicación · Jakarta sentence case</div><p style="margin:8px 0 0;color:var(--color-text-secondary);font-size:15px">The average brand at $10M–$50M overpays on shipping by 12–18%. Calmada, específica, cuantificada.</p></div>
+        </div>
+      </div>
+
+      <div class="lex reveal">
+        <div class="col">
+          <h5 class="si">Léxico — SÍ</h5>
+          <ul>
+            <li>real money · P&amp;L · dollar outcomes</li>
+            <li>savings · we fix it / we run it</li>
+            <li>traps · straight answer · 48 hours</li>
+            <li>cotiza gratis · sin límites (ES)</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h5 class="no">Léxico — NUNCA</h5>
+          <ul>
+            <li>buzzwords de consultor · "innovador"</li>
+            <li>"transformación digital" · "líderes en"</li>
+            <li>emoji · exclamaciones apiladas · em-dashes</li>
+            <li>promesas sin cifra detrás</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout reveal" style="margin-top:18px">La marca <b>se define contra el consultor tradicional</b>: "No pitch deck · Real numbers only · Confidentiality guaranteed". No vendemos cambios que no podamos cuantificar.</div>
+    </div>
+  </section>
+
+  <hr class="divider"/>
+
+  <!-- IMAGEN / FOTO / VIDEO -->
+  <section class="sec" id="imagen">
+    <div class="container">
+      <div class="sec__head reveal">
+        <div class="eyebrow">[ 10 ] Imagen, fotografía y video</div>
+        <h2 class="h-section">Imagen, fotografía y video.</h2>
+        <p class="lede">Las imágenes no decoran la marca: son la marca en su estado más literal. Atmósfera oscura como base, datos y tecnología como protagonistas, y un destello de color con intención.</p>
+      </div>
+
+      <div class="guide-note reveal">Los ejemplos de esta sección son maquetas construidas con el sistema. Sustituye los marcos por fotografía y film reales siguiendo estas reglas.</div>
+
+      <!-- Principio rector -->
+      <div class="frame reveal" style="aspect-ratio:21/8;margin-bottom:8px">
+        <img class="photo" src="photos/wh-aisle.jpg" alt=""><div class="shade"></div><div class="grain"></div>
+        <div class="ovtext" style="right:7%"><span>El principio rector</span><b style="max-width:70%">Oscuro, cinético, con momentos de<br><span style="color:var(--color-brand-primary-soft)">magenta que irrumpen</span> <span style="color:var(--color-brand-accent)">como neón</span> en un almacén.</b></div>
+      </div>
+
+      <!-- ============ FOTOGRAFÍA ============ -->
+      <div class="sub-h reveal"><span class="mono">A</span>Fotografía</div>
+      <p class="sub-lede reveal">El mundo físico de la logística filmado con precisión militar. Almacenes reales, personas reales en acción. La imagen debe responder sola: ¿esta operación es confiable?</p>
+
+      <div class="comp__label reveal">Qué fotografiar</div>
+      <div class="fgrid fg-3 reveal" style="margin:12px 0 36px">
+        <div class="frame"><img class="photo" src="photos/wh-boxes.jpg" alt=""><div class="shade"></div><div class="grain"></div>
+          <div class="cap">Bodega · racks e iluminación industrial</div></div>
+        <div class="frame"><img class="photo" src="photos/scan.jpg" alt=""><div class="shade"></div><div class="grain"></div>
+          <div class="cap">Lectura RFID · concentración real</div></div>
+        <div class="frame"><img class="photo" src="photos/conveyor.jpg" alt=""><div class="shade"></div><div class="grain"></div>
+          <div class="cap">Banda · obturación lenta, rastro</div></div>
+        <div class="frame"><img class="photo" src="photos/control.jpg" alt=""><div class="shade"></div><div class="grain"></div>
+          <div class="cap">Software logístico · datos en pantalla</div></div>
+        <div class="frame"><img class="photo" src="photos/label.jpg" alt=""><div class="shade"></div><div class="grain"></div>
+          <div class="cap">Detalle · etiqueta, código de barras</div></div>
+        <div class="frame"><img class="photo" src="photos/delivery-hands.jpg" alt=""><div class="shade"></div><div class="grain"></div>
+          <div class="cap">Entrega final · el producto llega</div></div>
+      </div>
+
+      <div class="comp__label reveal">Iluminación · dirigida, nunca plana</div>
+      <div class="fgrid fg-2 reveal" style="margin:12px 0 36px">
+        <div class="frame frame--grain"><img class="photo" src="photos/wh-wide.jpg" alt=""><div class="shade"></div><div class="grain"></div>
+          <span class="tag tag--do">Sí</span>
+          <div class="cap">Direccional · sombras duras · grano · luz fría LED</div></div>
+        <div class="frame cross"><img class="photo raw" src="photos/flat-studio.jpg" alt="">
+          <span class="tag tag--no">No</span>
+          <div class="cap">Plana · fondo infinito blanco · catálogo</div></div>
+      </div>
+
+      <div class="comp__label reveal">Composición · geometría industrial</div>
+      <div class="fgrid fg-2 reveal" style="margin:12px 0 36px">
+        <div class="frame"><img class="photo" src="photos/wh-aisle.jpg" alt=""><div class="shade"></div><div class="grain"></div>
+          <svg class="guides" viewBox="0 0 160 90" preserveAspectRatio="none">
+            <g stroke="rgba(0,156,201,.4)" stroke-width="0.6"><line x1="0" y1="2" x2="112" y2="45"/><line x1="0" y1="88" x2="112" y2="45"/><line x1="0" y1="32" x2="112" y2="45"/><line x1="0" y1="62" x2="112" y2="45"/></g>
+            <g stroke="rgba(255,255,255,.14)" stroke-width="0.5" stroke-dasharray="2 2"><line x1="53.3" y1="0" x2="53.3" y2="90"/><line x1="106.6" y1="0" x2="106.6" y2="90"/><line x1="0" y1="30" x2="160" y2="30"/><line x1="0" y1="60" x2="160" y2="60"/></g>
+            <circle cx="106.6" cy="45" r="2.4" fill="#009CC9"/>
+          </svg>
+          <div class="cap">Líneas guía → punto de fuga · regla de tercios</div></div>
+        <div class="frame"><div class="scene" style="background:radial-gradient(90% 90% at 88% 50%,rgba(0,156,201,.28),transparent 55%),linear-gradient(180deg,#0e0e16,#070709)"></div><div class="grain"></div>
+          <div class="ovtext"><span>Texto en overlay</span><b>FULFILLMENT<br>SIN LÍMITES</b></div>
+          <div class="cap" style="right:auto">Espacio negativo a la izquierda para tipografía Exo</div></div>
+      </div>
+
+      <div class="comp__label reveal">Personas · operadoras del sistema, nunca decoración</div>
+      <div class="fgrid fg-2 reveal" style="margin:12px 0 36px">
+        <div class="frame"><img class="photo" src="photos/scan.jpg" alt=""><div class="shade"></div><div class="grain"></div>
+          <span class="tag tag--do">Sí</span>
+          <div class="cap">En acción · escaneando · concentración</div></div>
+        <div class="frame cross"><img class="photo raw" src="photos/smile1.jpg" alt="">
+          <span class="tag tag--no">No</span>
+          <div class="cap">Posando a cámara · sonrisa de stock</div></div>
+      </div>
+
+      <div class="comp__label reveal">Tratamiento de color · grading</div>
+      <p class="sub-lede reveal">El grading mantiene la foto dentro del sistema oscuro sin aplastarla a negro: se subexpone y desatura la imagen, y encima se aplica el <b style="color:var(--color-text-primary)">gradiente de marca en versión oscura</b> — magenta tenue por una esquina y un halo cyan por la opuesta (el mismo eje 245° de la firma), muy difuminado. El color se siente, no se ve.</p>
+      <div class="fgrid fg-2 reveal" style="margin:12px 0 18px">
+        <div class="frame"><img class="photo raw" src="photos/wh-shelves.jpg" alt=""><div class="grain"></div>
+          <span class="tag" style="background:rgba(255,255,255,.08);color:var(--color-text-secondary)">Antes · raw</span></div>
+        <div class="frame"><img class="photo" src="photos/wh-shelves.jpg" alt=""><div class="shade"></div><div class="grain"></div>
+          <span class="tag tag--do">Después</span>
+          <div class="cap">−0.5 EV · desaturado · overlay de marca (magenta + halo cyan)</div></div>
+      </div>
+      <div class="callout reveal" style="margin-bottom:36px">
+        <b>La receta del overlay.</b> Sobre la foto: <code style="font-family:var(--font-mono);font-size:12.5px;color:var(--color-brand-primary-accessible)">brightness .84 · saturate .78</code>. Encima, una capa difuminada y de baja opacidad:
+        magenta <code style="font-family:var(--font-mono);font-size:12.5px;color:var(--color-brand-primary-accessible)">#A3086A ~26%</code> arriba-derecha → cyan <code style="font-family:var(--font-mono);font-size:12.5px;color:var(--color-brand-accent)">#009CC9 ~30%</code> abajo-izquierda, sobre una base oscura translúcida (caída muy extendida, sin bordes marcados). Nunca magenta plano encima de la foto, ni un negro neutro.
+      </div>
+
+      <div class="comp__label reveal">Lo que nunca se hace</div>
+      <div class="fgrid fg-3 reveal" style="margin:12px 0 8px">
+        <div class="frame cross"><img class="photo raw" src="photos/van.jpg" alt=""><span class="tag tag--no">Stock</span>
+          <div class="cap">Camioneta de reparto genérica</div></div>
+        <div class="frame cross"><img class="photo raw" src="photos/handshake.jpg" alt=""><span class="tag tag--no">Stock</span>
+          <div class="cap">Apretón de manos frente a bodega</div></div>
+        <div class="frame cross"><img class="photo raw" src="photos/smile2.jpg" alt=""><span class="tag tag--no">Stock</span>
+          <div class="cap">Persona con tablet sonriendo</div></div>
+      </div>
+
+      <!-- ============ DATOS ============ -->
+      <div class="sub-h reveal"><span class="mono">B</span>Gráficas e imágenes de datos</div>
+      <p class="sub-lede reveal">Números en Exo 800. Cyan para el dato, magenta solo si es CTA o umbral de acción. Fondo siempre surface/raised, nunca blanco. Etiquetas en JetBrains Mono.</p>
+
+      <div class="metric-row reveal" style="margin-bottom:10px">
+        <div class="metricblock"><div class="v">99.2%</div><div class="l">On-time delivery</div></div>
+        <div class="metricblock"><div class="v">24.000+</div><div class="l">Pedidos mensuales</div></div>
+        <div class="metricblock"><div class="v cta">48 h</div><div class="l">Respuesta · umbral de acción (magenta)</div></div>
+      </div>
+      <p class="sub-lede reveal" style="font-size:13px;color:var(--color-text-tertiary);margin-bottom:32px">Cyan = dato. Magenta = CTA / umbral. Nunca paletas múltiples tipo dashboard genérico.</p>
+
+      <div class="fgrid fg-2 reveal" style="margin-bottom:36px;align-items:start">
+        <div class="chartcard">
+          <div class="comp__label" style="margin-bottom:14px">Línea · cyan dato, magenta = hoy</div>
+          <svg viewBox="0 0 320 150" width="100%" height="auto" style="display:block">
+            <g stroke="rgba(255,255,255,.06)" stroke-width="1"><line x1="0" y1="30" x2="320" y2="30"/><line x1="0" y1="70" x2="320" y2="70"/><line x1="0" y1="110" x2="320" y2="110"/></g>
+            <polyline fill="none" stroke="#B4B4C0" stroke-width="2" stroke-opacity=".5" points="0,120 53,108 107,112 160,96 213,100 267,86 320,80"/>
+            <polyline fill="none" stroke="#009CC9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" points="0,110 53,92 107,96 160,66 213,72 267,44 320,34"/>
+            <circle cx="320" cy="34" r="5" fill="#A3086A"/><circle cx="320" cy="34" r="9" fill="none" stroke="#A3086A" stroke-opacity=".4" stroke-width="2"/>
+          </svg>
+          <div class="legend"><span><i style="background:#009CC9"></i>Serie principal</span><span><i style="background:#B4B4C0;opacity:.6"></i>Secundaria</span><span><i style="background:#A3086A"></i>Hoy / objetivo</span></div>
+        </div>
+        <div class="chartcard">
+          <div class="comp__label" style="margin-bottom:14px">Barras · mismo principio</div>
+          <svg viewBox="0 0 320 150" width="100%" height="auto" style="display:block">
+            <g fill="#009CC9"><rect x="14" y="78" width="34" height="62" rx="3"/><rect x="62" y="60" width="34" height="80" rx="3"/><rect x="110" y="92" width="34" height="48" rx="3"/><rect x="158" y="48" width="34" height="92" rx="3"/><rect x="206" y="66" width="34" height="74" rx="3"/></g>
+            <rect x="254" y="28" width="34" height="112" rx="3" fill="#A3086A"/>
+          </svg>
+          <div class="legend"><span><i style="background:#009CC9"></i>Histórico (cyan)</span><span><i style="background:#A3086A"></i>Objetivo (magenta)</span></div>
+        </div>
+      </div>
+
+      <div class="comp__label reveal">Infografía de proceso · StepCards del sistema</div>
+      <div class="fgrid fg-3 reveal" style="margin-top:12px">
+        <div class="stepcard"><div class="stepcard__inner"><div class="stepcard__num">01</div><h4>Recibimos</h4><p>RFID en bodega, cada unidad trazada.</p></div></div>
+        <div class="stepcard"><div class="stepcard__inner"><div class="stepcard__num">02</div><h4>Almacenamos</h4><p>Inventario optimizado, sin costo ocioso.</p></div></div>
+        <div class="stepcard"><div class="stepcard__inner"><div class="stepcard__num">03</div><h4>Despachamos</h4><p>Multicarrier, al mejor costo y tiempo.</p></div></div>
+      </div>
+
+      <!-- ============ VIDEO Y MOTION ============ -->
+      <div class="sub-h reveal"><span class="mono">C</span>Video y motion</div>
+      <p class="sub-lede reveal">Documental industrial: las imágenes hablan, sin narrador. Ritmo deliberado con cortes rápidos en la acción. Tipografía y motion del sistema (120–600ms, easing de marca).</p>
+
+      <div class="fgrid fg-2 reveal" style="margin-bottom:36px">
+        <div class="frame"><img class="photo" src="photos/wh-wide.jpg" alt=""><div class="shade"></div><div class="grain"></div>
+          <span class="tag" style="background:rgba(0,156,201,.12);color:var(--color-brand-accent)">Institucional · 16:9</span>
+          <div class="lowerthird"><div class="n">$6.4M en impacto P&amp;L</div><div class="r">Caso · footwear DTC · iluminación lateral dura</div></div></div>
+        <div class="frame reel"><img class="photo" src="photos/worker-walk.jpg" alt=""><div class="shade"></div><div class="grain"></div>
+          <span class="tag" style="background:rgba(163,8,106,.16);color:var(--color-brand-primary-soft)">Reel · 9:16</span>
+          <div class="hook"><div class="num">99.2%</div><div class="lbl">gancho en el primer segundo</div></div>
+          <div class="subbar">Subtítulo en Jakarta sobre barra al 80%</div></div>
+      </div>
+
+      <div class="fgrid fg-2 reveal" style="margin-bottom:8px;align-items:stretch">
+        <div class="frame"><div class="scene" style="background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px),radial-gradient(60% 60% at 30% 40%,rgba(163,8,106,.35),transparent 60%),radial-gradient(60% 60% at 75% 70%,rgba(0,156,201,.3),transparent 60%),linear-gradient(180deg,#0e0e16,#070709);background-size:26px 26px,26px 26px,100% 100%,100% 100%,100% 100%"></div>
+          <div class="cap">Loop atmosférico · grid + orbes · lento, sutil</div></div>
+        <div class="card ease-demo" style="display:flex;flex-direction:column;justify-content:center">
+          <div class="comp__label">Animación de dato · 600ms · cubic-bezier(.2,.7,.2,1)</div>
+          <div style="font-family:var(--font-display);font-weight:800;font-size:40px;letter-spacing:-.04em;color:var(--color-brand-accent);margin:10px 0 2px">24.000+</div>
+          <div class="track"><div class="fill"></div></div>
+          <p style="font-size:12.5px;color:var(--color-text-tertiary);margin:14px 0 0">Arranque limpio, frenada suave, sin bounce. Eso es lo que se "siente ZenderHub" en movimiento.</p></div>
+      </div>
+
+      <!-- ============ CANAL ============ -->
+      <div class="sub-h reveal"><span class="mono">D</span>Aplicación por canal</div>
+      <div class="chan reveal" style="margin-top:18px">
+        <div class="card">
+          <div class="mini"><img class="photo" src="photos/wh-wide.jpg" alt=""><div class="shade"></div><div class="grain" style="position:absolute;inset:0"></div><img src="logos/zenderhub-logo-negative-horizontal.svg" alt="" style="position:absolute;left:12px;bottom:10px;height:14px;z-index:3"></div>
+          <h4>Web</h4><p>Foto sobre #0A0A0F + logo negativo. Nunca foto sobre blanco con logo a color aquí.</p></div>
+        <div class="card">
+          <div class="mini" style="border-radius:23px"><img class="photo" src="photos/wh-aisle.jpg" alt=""><div class="shade"></div></div>
+          <h4>Presentaciones</h4><p>Imágenes recortadas con el radius-card de 23px. Un recorte recto rompe el sistema.</p></div>
+        <div class="card">
+          <div class="mini" style="display:grid;place-content:center;background:var(--color-surface-raised)"><div style="font-family:var(--font-display);font-weight:800;font-size:30px;letter-spacing:-.04em;color:var(--color-brand-accent)">$5.2M</div></div>
+          <h4>LinkedIn / B2B</h4><p>El dato grande + contexto mínimo rinde más que la foto de instalaciones.</p></div>
+        <div class="card">
+          <div class="mini" style="background:#0A0A0F;display:grid;place-content:center"><span class="mono">Negro siempre</span></div>
+          <h4>Impreso</h4><p>Se mantiene el fondo negro. No hay versión "light" de identidad; svc-light es una excepción puntual.</p></div>
+      </div>
+
+      <!-- ============ PRUEBA ============ -->
+      <div class="sub-h reveal"><span class="mono">E</span>La prueba de pertenencia</div>
+      <div class="fgrid fg-2 reveal" style="margin:12px 0 18px">
+        <div class="frame cross"><img class="photo raw" src="photos/van.jpg" alt=""><span class="tag tag--no">Genérico</span>
+          <div class="cap">Podría estar en la web de cualquier competidor</div></div>
+        <div class="frame"><img class="photo" src="photos/wh-aisle.jpg" alt=""><div class="shade"></div><div class="grain"></div><span class="tag tag--do">ZenderHub</span>
+          <div class="cap">Oscuridad + precisión + carácter latino + destello magenta</div></div>
+      </div>
+      <div class="callout reveal"><b>Antes de aprobar cualquier imagen, una sola pregunta:</b> ¿esta imagen podría aparecer sin cambios en la web de un competidor logístico genérico? Si la respuesta es sí, no es una imagen de ZenderHub — incluso sin el logo encima.</div>
+    </div>
+  </section>
+
+  <hr class="divider"/>
+
+  <!-- ACCESIBILIDAD -->
+  <section class="sec" id="accesibilidad">
+    <div class="container">
+      <div class="sec__head reveal">
+        <div class="eyebrow">[ 11 ] Accesibilidad</div>
+        <h2 class="h-section">Pensado para que todos lo lean y lo usen.</h2>
+        <p class="lede">La accesibilidad está integrada en los tokens y en el código — no añadida al final. Esto es lo que se tuvo en cuenta y cómo funciona en este mismo brandbook.</p>
+      </div>
+
+      <div class="a11y reveal">
+        <div class="card">
+          <div class="chk"><svg viewBox="0 0 24 24" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+          <h4>Contraste de color</h4>
+          <p>Los textos primario y secundario superan <b>WCAG AA</b> sobre el negro de marca. Los enlaces usan el magenta accesible <code>#D44FA0</code>, no el primario, para garantizar contraste sobre fondo oscuro.</p>
+        </div>
+        <div class="card">
+          <div class="chk"><svg viewBox="0 0 24 24" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+          <h4>El color nunca va solo</h4>
+          <p>Los estados (en bodega, pendiente, error) combinan color <b>con texto e ícono</b>. Nadie depende de distinguir un color para entender el estado. Error siempre en <code>#CC1111</code>.</p>
+        </div>
+        <div class="card">
+          <div class="chk"><svg viewBox="0 0 24 24" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+          <h4>Movimiento reducido</h4>
+          <p>Respeta <code>prefers-reduced-motion</code>: si el sistema lo pide, se desactivan reveals, el pulso de los dots y los desplazamientos. El easing es suave, sin rebotes.</p>
+        </div>
+        <div class="card">
+          <div class="chk"><svg viewBox="0 0 24 24" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+          <h4>Teclado y foco visible</h4>
+          <p>Todo es operable con teclado. Hay anillo de foco visible (<code>:focus-visible</code>) en enlaces, botones y campos, un enlace <b>"Saltar al contenido"</b> al inicio, y el menú móvil cierra con <code>Esc</code>.</p>
+        </div>
+        <div class="card">
+          <div class="chk"><svg viewBox="0 0 24 24" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+          <h4>Semántica y ARIA</h4>
+          <p>Landmarks reales (<code>aside</code>, <code>nav</code> con etiqueta), el botón de menú expone <code>aria-expanded</code>/<code>aria-controls</code>, y el switch usa <code>role="switch"</code> + <code>aria-checked</code> operable con Espacio/Enter.</p>
+        </div>
+        <div class="card">
+          <div class="chk"><svg viewBox="0 0 24 24" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+          <h4>Funciona sin JavaScript</h4>
+          <p>El contenido es legible aunque el JS falle: las animaciones de entrada solo se activan cuando hay JS (<code>html.js</code>). Las imágenes llevan <code>alt</code>; las decorativas, <code>alt</code> vacío.</p>
+        </div>
+      </div>
+
+      <div class="callout reveal" style="margin-top:24px"><b>Cómo verificarlo.</b> Navega con la tecla <code style="font-family:var(--font-mono);font-size:12px;color:var(--color-brand-primary-accessible)">Tab</code> para ver el foco y el enlace de salto; activa "Reducir movimiento" en tu sistema y recarga para ver el modo sin animación; o pasa un checker de contraste sobre la paleta de la sección Color.</div>
+    </div>
+  </section>
+
+  <hr class="divider"/>
+
+  <!-- TOKENS / GOVERNANCE -->
+  <section class="sec" id="tokens">
+    <div class="container">
+      <div class="sec__head reveal">
+        <div class="eyebrow">[ 12 ] Tokens &amp; gobernanza</div>
+        <h2 class="h-section">Cómo se mantiene el sistema.</h2>
+        <p class="lede">Tres capas. Siempre referencias semánticas, nunca hex crudo en componentes.</p>
+      </div>
+
+      <div class="files reveal" style="margin-bottom:16px">
+        <div class="file"><div><code>primitives.json</code><p>Valores crudos. Ocultar del uso diario.</p></div></div>
+        <div class="file"><div><code>semantic.json</code><p>Tokens de decisión. Lo que usas en componentes.</p></div></div>
+        <div class="file"><div><code>component.json</code><p>Valores únicos de un componente.</p></div></div>
+        <div class="file"><div><code>typography.json</code><p>Estilos de texto → Figma text styles.</p></div></div>
+        <div class="file"><div><code>global.css</code><p>Variables CSS de producción.</p></div></div>
+        <div class="file"><div><code>COMPONENTS.md · TYPOGRAPHY-TABLE.md</code><p>Inventario y escala de texto.</p></div></div>
+      </div>
+
+      <div class="card reveal" style="overflow-x:auto">
+        <div class="comp__label" style="margin-bottom:8px">Inconsistencias detectadas — y su resolución</div>
+        <table class="gov-table">
+          <thead><tr><th>Problema</th><th>Severidad</th><th>Resolución</th></tr></thead>
+          <tbody>
+            <tr><td>Dos valores de error: <code style="font-family:var(--font-mono);font-size:11px">--err:#FF5A6E</code> vs <code style="font-family:var(--font-mono);font-size:11px">#CC1111</code></td><td><span class="sev sev--alta">Alta</span></td><td>Normalizado a #CC1111 como único error.</td></tr>
+            <tr><td><code style="font-family:var(--font-mono);font-size:11px">--color-zh-*</code> / <code style="font-family:var(--font-mono);font-size:11px">--radius-zh-*</code> sin definir en :root</td><td><span class="sev sev--media">Media</span></td><td>Vars de Tailwind v4 — mapear a tokens del DS.</td></tr>
+            <tr><td><code style="font-family:var(--font-mono);font-size:11px">--font-body</code> / <code style="font-family:var(--font-mono);font-size:11px">--ink-soft</code> en footer sin definición</td><td><span class="sev sev--media">Media</span></td><td>Corregido con variables semánticas.</td></tr>
+            <tr><td>Tamaños 14.5px / 15.5px (no estándar)</td><td><span class="sev sev--baja">Baja</span></td><td>Redondeados a 14/16px en tokens.</td></tr>
+            <tr><td><code style="font-family:var(--font-mono);font-size:11px">body.svc-light</code> con hex hardcoded</td><td><span class="sev sev--baja">Baja</span></td><td>Documentado. Primitivos light-mode en futura iteración.</td></tr>
+          </tbody>
+        </table>
+        <div class="comp__label" style="margin:22px 0 8px">Roadmap</div>
+        <ul class="rules">
+          <li><span class="rx">v1.1</span><span>Definir <code style="font-family:var(--font-mono);font-size:12px">--color-zh-*</code> en :root · tokens de color light-mode.</span></li>
+          <li><span class="rx">v1.2</span><span>Figma Library completa · documentar animaciones SVG de service cards.</span></li>
+          <li><span class="rx">v2.0</span><span>Componentes a Storybook para documentación interactiva.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container foot">
+    <div>
+      <img src="logos/zenderhub-logo-negative-horizontal.svg" alt="ZenderHub" style="height:32px;width:auto" />
+      <p>Ecommerce Logistics · Consultancy &amp; Operations</p>
+      <p>Miami · Bogotá</p>
+      <p style="margin-top:14px"><a href="mailto:Vp.Sales@zenderhub.com">Vp.Sales@zenderhub.com</a></p>
+    </div>
+    <div>
+      <div class="comp__label">Brandbook</div>
+      <p style="max-width:320px">Generado desde <code style="font-family:var(--font-mono);font-size:12px;color:var(--color-brand-primary-accessible)">/design-system</code> v1.0.0, extraído del código de producción de zenderhub-web. Este documento sigue —y usa— los mismos tokens que describe.</p>
+    </div>
+  </div>
+  <div class="container"><div class="foot__legal">© 2026 ZenderHub · Brand System v1.0.0 · Uso interno del equipo</div></div>
+</footer>
+
+<button class="totop" id="totop" aria-label="Volver arriba">
+  <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<div class="toast" id="toast">Copiado · <b id="toastval">#A3086A</b></div>
+
+<script>
+(function(){
+  document.documentElement.classList.add('js');
+  // back-to-top visibility
+  var totop=document.getElementById('totop');
+  function onScroll(){ totop.classList.toggle('show', window.scrollY>600); }
+  window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
+  totop.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});
+
+  // mobile drawer
+  var sidebar=document.getElementById('sidebar'), scrim=document.getElementById('scrim'), burger=document.getElementById('burger');
+  function setDrawer(open){
+    sidebar.classList.toggle('open',open);
+    scrim.classList.toggle('show',open);
+    burger.setAttribute('aria-expanded',open?'true':'false');
+  }
+  burger.addEventListener('click',function(){setDrawer(!sidebar.classList.contains('open'))});
+  scrim.addEventListener('click',function(){setDrawer(false)});
+  window.addEventListener('keydown',function(e){if(e.key==='Escape')setDrawer(false)});
+
+  // nav links + close drawer on navigate
+  var links=Array.prototype.slice.call(document.querySelectorAll('#navlinks a'));
+  var map={};
+  links.forEach(function(a){ map[a.getAttribute('href').slice(1)]=a; a.addEventListener('click',function(){setDrawer(false)}); });
+  var secEls=Array.prototype.slice.call(document.querySelectorAll('main section[id]'));
+
+  // reveal-on-scroll — scroll-based for reliability; staggered on first paint
+  var reveals=Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+  reveals.forEach(function(el,i){ el.style.transitionDelay=(Math.min(i,6)*40)+'ms'; });
+  function revealInView(){
+    var vh=window.innerHeight;
+    for(var i=reveals.length-1;i>=0;i--){
+      if(reveals[i].getBoundingClientRect().top < vh*0.92){ reveals[i].classList.add('in'); reveals.splice(i,1); }
+    }
+  }
+  // active section highlight in sidebar — scroll-based
+  function setActive(){
+    var line=window.innerHeight*0.36, cur=null;
+    secEls.forEach(function(s){ if(s.getBoundingClientRect().top<=line) cur=s; });
+    var want=cur?map[cur.id]:null;
+    links.forEach(function(l){ l.classList.toggle('active', l===want); });
+  }
+  function onView(){ revealInView(); setActive(); }
+  window.addEventListener('scroll',onView,{passive:true});
+  window.addEventListener('resize',onView);
+  onView();
+
+  // click to copy
+  var toast=document.getElementById('toast'), toastval=document.getElementById('toastval'), tid;
+  function copy(val){
+    navigator.clipboard && navigator.clipboard.writeText(val);
+    toastval.textContent=val.length>42?val.slice(0,40)+'…':val;
+    toast.classList.add('show');
+    clearTimeout(tid); tid=setTimeout(function(){toast.classList.remove('show')},1600);
+  }
+  document.querySelectorAll('[data-copy]').forEach(function(el){
+    el.setAttribute('title','Click para copiar');
+    el.addEventListener('click',function(){copy(el.getAttribute('data-copy'))});
+  });
+
+  // switch
+  var sw=document.getElementById('sw'), swlabel=document.getElementById('swlabel');
+  function toggle(){var on=sw.classList.toggle('on'); sw.setAttribute('aria-checked',on); swlabel.textContent=on?'on':'off';}
+  sw.addEventListener('click',toggle);
+  sw.addEventListener('keydown',function(e){if(e.key===' '||e.key==='Enter'){e.preventDefault();toggle();}});
+})();
+</script>
+</body>
+</html>
