@@ -1795,7 +1795,7 @@ html.js .reveal.in{opacity:1;transform:none}
     var cv=document.createElement('canvas'); cv.width=W; cv.height=H;
     var ctx=cv.getContext('2d'); ctx.drawImage(img,0,0,W,H);
     var d=ctx.getImageData(0,0,W,H).data;
-    var n=0,dark=0,bright=0,mag=0,cyan=0,off=0,satSum=0,satN=0,lumSum=0;
+    var n=0,dark=0,bright=0,mag=0,cyan=0,off=0,nbSatSum=0,nbSatN=0,lumSum=0;
     var topLum=0,topN=0,botLum=0,botN=0, t1=H/3, t2=H*2/3;
     for(var y=0;y<H;y++) for(var x=0;x<W;x++){
       var i=(y*W+x)*4, r=d[i],g=d[i+1],b=d[i+2];
@@ -1803,42 +1803,45 @@ html.js .reveal.in{opacity:1;transform:none}
       n++; lumSum+=l;
       if(y<t1){topLum+=l;topN++;} else if(y>t2){botLum+=l;botN++;}
       if(l<0.22) dark++;
-      if(l>0.85) bright++;
-      if(s>0.18 && l>0.06 && l<0.94){satSum+=s;satN++;}
-      if(s>0.22 && h>=298 && h<=344 && l>0.07 && l<0.80) mag++;
-      else if(s>0.22 && h>=176 && h<=208 && l>0.07 && l<0.85) cyan++;
-      else if(s>0.45 && (h<=12||h>=348)) {/* error red — permitido */}
-      else if(s>0.30 && l>0.10 && l<0.92) off++;
+      if(l>0.80) bright++;
+      // ventanas estrictas ancladas a los hex reales: cyan #009CC9 (H191) · magenta #A3086A (H322)
+      var isMag = s>0.45 && h>=305 && h<=338 && l>=0.12 && l<=0.58;
+      var isCyan= s>0.45 && h>=183 && h<=201 && l>=0.18 && l<=0.62;
+      var isErr = s>0.50 && (h<=10 || h>=350);
+      var inArc = h>=183 && h<=338; // arco de marca: cyan→azul→púrpura→magenta (recorre el gradiente firma)
+      if(isMag) mag++;
+      else if(isCyan) cyan++;
+      else if(isErr){ /* rojo error — permitido, no penaliza */ }
+      else if(!inArc && s>0.18 && l>0.06 && l<0.94){ nbSatSum+=s; nbSatN++; if(s>0.25 && l<0.92) off++; }
     }
     var darkR=dark/n, brightR=bright/n, magR=mag/n, cyanR=cyan/n, brandR=magR+cyanR, offR=off/n;
-    var meanSat=satN?satSum/satN:0, colorFrac=satN/n;
+    var nbMeanSat=nbSatN?nbSatSum/nbSatN:0, nbFrac=nbSatN/n;
     var topMean=topN?topLum/topN:lumSum/n, botMean=botN?botLum/botN:lumSum/n;
     var darkestThird=Math.min(topMean,botMean);
     var ar=img.naturalWidth/img.naturalHeight;
 
-    // 1 · dark-first
-    var sDark=Math.round(clamp(lin(darkR,0.12,8,0.60,100),5,100));
-    if(brightR>0.30) sDark=Math.round(sDark*0.6);
+    // 1 · dark-first (fundamental: ZenderHub no tiene versión clara)
+    var sDark=Math.round(clamp(lin(darkR,0.18,4,0.62,100),3,100));
+    if(brightR>0.22) sDark=Math.round(sDark*clamp(1-(brightR-0.22)*1.4,0.25,1));
     var rDark=sDark>=80?'Fondo oscuro dominante, correcto para dark-first.'
-      :'El lienzo se ve claro. ZenderHub es <b>dark-first (#0A0A0F)</b>: oscurece el fondo o aplica el fade de marca antes del texto.';
+      :'El lienzo se ve claro. ZenderHub es <b>dark-first (#0A0A0F)</b> — no tiene versión clara. Oscurece el fondo o aplica el fade de marca.';
 
-    // 2 · color de marca
+    // 2 · color de marca (presencia; sin penalizar por usar mucho gradiente)
     var sBrand, rBrand;
-    if(brandR<0.004){ sBrand=18; rBrand='No se detecta color de marca. Suma un acento <b>magenta #A3086A</b> o <b>cyan #009CC9</b> (un destello, datos clave o el cierre).'; }
-    else if(brandR<=0.20){ sBrand=Math.round(lin(brandR,0.004,72,0.02,100));
-      rBrand=(magR>0.002&&cyanR>0.002)?'Aparecen magenta y cyan: el gradiente firma está presente.':'Color de marca presente como acento. Bien.'; }
-    else { sBrand=Math.round(lin(brandR,0.20,100,0.45,50)); rBrand='Mucho color de marca a full-bleed. El magenta/cyan debe ser un <b>destello</b> sobre el negro, no cubrir la pieza.'; }
+    if(brandR<0.003){ sBrand=12; rBrand='No se detecta el color de marca real (<b>magenta #A3086A</b> / <b>cyan #009CC9</b>). Un cyan o turquesa cualquiera no cuenta: usa los hex exactos.'; }
+    else { sBrand=Math.round(clamp(lin(brandR,0.003,58,0.035,100),58,100));
+      rBrand=(magR>0.0015&&cyanR>0.0015)?'Magenta y cyan presentes: el gradiente firma está activo.':'Color de marca presente. Bien.'; }
 
-    // 3 · disciplina de paleta
-    var sPal=Math.round(clamp(100-offR*420,0,100));
+    // 3 · disciplina de paleta (severo con color fuera de marca)
+    var sPal=Math.round(clamp(100-offR*560,0,100));
     var rPal=sPal>=80?'Paleta disciplinada: magenta + cyan + neutros.'
-      :'Colores fuera de paleta detectados ('+Math.round(offR*100)+'%). ZenderHub usa <b>solo magenta, cyan y neutros</b>; el rojo, solo para error.';
+      :'Mucho color fuera de paleta ('+Math.round(offR*100)+'%). ZenderHub usa <b>solo magenta, cyan y neutros</b>; el rojo, solo para error. Los azules/verdes/turquesas no son de marca.';
 
-    // 4 · grading / saturación
+    // 4 · grading / saturación (solo sobre la imagen NO-marca: la foto, no el gradiente)
     var sGrade, rGrade;
-    if(colorFrac<0.04){ sGrade=85; rGrade='Imagen casi neutra; el grading no es crítico aquí.'; }
-    else { sGrade=Math.round(clamp(lin(meanSat,0.78,40,0.40,100),20,100));
-      rGrade=sGrade>=80?'Saturación dentro del grading de marca.':'Imagen muy saturada. Aplica el grading: <b>brightness .84 · saturate .78</b> para que el color no compita.'; }
+    if(nbFrac<0.04){ sGrade=88; rGrade='Casi no hay color ajeno a la marca; el grading no es crítico aquí.'; }
+    else { sGrade=Math.round(clamp(lin(nbMeanSat,0.70,28,0.30,100),12,100));
+      rGrade=sGrade>=80?'La foto está dentro del grading de marca.':'La foto está muy saturada/cruda. Aplica el grading <b>brightness .84 · saturate .78</b> y desatura para que el color no compita.'; }
 
     // 5 · formato social
     var sFmt=62, fLabel, rFmt;
@@ -1856,14 +1859,21 @@ html.js .reveal.in{opacity:1;transform:none}
       :'Asegura una <b>zona oscura</b> donde caiga el texto; usa el fade de marca (varias paradas, sin corte seco).';
 
     var dims=[
-      {nm:'Fondo dark-first', s:sDark, rec:rDark, w:1.3},
+      {nm:'Fondo dark-first', s:sDark, rec:rDark, w:1.6},
       {nm:'Color de marca', s:sBrand, rec:rBrand, w:1.2},
-      {nm:'Disciplina de paleta', s:sPal, rec:rPal, w:1.2},
-      {nm:'Grading · saturación', s:sGrade, rec:rGrade, w:0.9},
-      {nm:'Formato social', s:sFmt, rec:rFmt, w:0.8, extra:fLabel},
+      {nm:'Disciplina de paleta', s:sPal, rec:rPal, w:1.4},
+      {nm:'Grading · saturación', s:sGrade, rec:rGrade, w:0.8},
+      {nm:'Formato social', s:sFmt, rec:rFmt, w:0.7, extra:fLabel},
       {nm:'Zona de texto', s:sText, rec:rText, w:1.0}
     ];
     var tw=0,acc=0; dims.forEach(function(x){tw+=x.w;acc+=x.s*x.w;});
+    var overall=Math.round(acc/tw);
+    // GATES — un fallo de marca fundamental no se promedia: tapa el score
+    if(darkR<0.26) overall=Math.min(overall,10);          // no es dark-first
+    else if(darkR<0.42) overall=Math.min(overall,58);     // poco oscuro
+    if(brightR>0.45) overall=Math.min(overall,14);         // dominado por claro/blanco
+    if(offR>0.30) overall=Math.min(overall,12);            // paleta fuera de marca
+    if(brandR<0.003) overall=Math.min(overall,62);         // sin nada de color de marca
 
     // firma de color 8x8 (RGB por celda) para detectar duplicados en un set
     var hc=document.createElement('canvas');hc.width=8;hc.height=8;
@@ -1871,7 +1881,7 @@ html.js .reveal.in{opacity:1;transform:none}
     var hd=hx.getImageData(0,0,8,8).data, sig=[];
     for(var k=0;k<64;k++){ sig.push(hd[k*4]/255,hd[k*4+1]/255,hd[k*4+2]/255); }
 
-    return {overall:Math.round(acc/tw), dims:dims, ar:ar, fmt:fLabel, darkR:darkR, brandR:brandR, sig:sig};
+    return {overall:overall, dims:dims, ar:ar, fmt:fLabel, darkR:darkR, brandR:brandR, sig:sig};
   }
   function sigDist(a,b){ var s=0; for(var i=0;i<a.length;i++) s+=Math.abs(a[i]-b[i]); return s/a.length; }
 
