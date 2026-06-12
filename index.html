@@ -595,6 +595,10 @@ html.js .reveal.in{opacity:1;transform:none}
   .dot{animation:none}.motion-cell:hover .ball{transform:none}
   html{scroll-behavior:auto}
 }
+/* reveals más rápidos en móvil: menos duración y desplazamiento */
+@media (max-width:960px){
+  html.js .reveal{transition-duration:280ms;transform:translateY(8px)}
+}
 
 .callout{border-left:2px solid var(--color-brand-primary);background:var(--gradient-soft);border-radius:0 var(--radius-tile) var(--radius-tile) 0;padding:18px 22px;font-size:14.5px;color:var(--color-text-secondary)}
 .callout b{color:var(--color-text-primary)}
@@ -1725,11 +1729,12 @@ html.js .reveal.in{opacity:1;transform:none}
 
   // reveal-on-scroll — scroll-based for reliability; staggered on first paint
   var reveals=Array.prototype.slice.call(document.querySelectorAll('.reveal'));
-  reveals.forEach(function(el,i){ el.style.transitionDelay=(Math.min(i,6)*40)+'ms'; });
+  var mqMobile=window.matchMedia('(max-width:960px)');
+  reveals.forEach(function(el,i){ el.style.transitionDelay=(Math.min(i,mqMobile.matches?3:6)*(mqMobile.matches?12:40))+'ms'; });
   function revealInView(){
-    var vh=window.innerHeight;
+    var vh=window.innerHeight, line=vh*(mqMobile.matches?1.0:0.92); // en móvil revela en cuanto entra
     for(var i=reveals.length-1;i>=0;i--){
-      if(reveals[i].getBoundingClientRect().top < vh*0.92){ reveals[i].classList.add('in'); reveals.splice(i,1); }
+      if(reveals[i].getBoundingClientRect().top < line){ reveals[i].classList.add('in'); reveals.splice(i,1); }
     }
   }
   // active section highlight in sidebar — scroll-based
